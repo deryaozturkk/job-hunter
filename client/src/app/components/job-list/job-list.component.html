@@ -1,0 +1,43 @@
+<div class="container">
+  <h2>📋 İş Başvurularım</h2>
+
+  <div class="add-job-form">
+    <h3>Yeni Başvuru Ekle</h3>
+    <div class="form-group">
+      <input 
+        type="text" 
+        [(ngModel)]="newJob.company" 
+        placeholder="Şirket Adı (Örn: Getir)"
+      >
+      <input 
+        type="text" 
+        [(ngModel)]="newJob.position" 
+        placeholder="Pozisyon (Örn: Frontend Dev)"
+      >
+      <input 
+        type="text" 
+        [(ngModel)]="newJob.platform" 
+        placeholder="Platform (LinkedIn, Kariyer.net)"
+      >
+      <button (click)="addJob()" [disabled]="isLoading">
+        {{ isLoading ? '⏳ Ekleniyor...' : '➕ Ekle' }}
+      </button>
+    </div>
+  </div>
+  <hr>
+  <div *ngIf="jobs.length === 0">
+    <p>Henüz hiç başvuru yapmadın. Hadi başlayalım! 🚀</p>
+  </div>
+
+  <ul class="job-list">
+    <li *ngFor="let job of jobs" class="job-item">
+      <div class="job-header">
+        <h3>{{ job.company }}</h3>
+        <button class="delete-btn" (click)="deleteJob(job.id)">🗑️</button>
+      </div>
+      <p><strong>Pozisyon:</strong> {{ job.position }}</p>
+      <p><strong>Durum:</strong> {{ job.status }}</p>
+      <small>Tarih: {{ job.applicationDate | date:'short' }}</small>
+    </li>
+  </ul>
+</div>
