@@ -1,43 +1,71 @@
-<div class="container">
-  <h2>📋 İş Başvurularım</h2>
-
-  <div class="add-job-form">
-    <h3>Yeni Başvuru Ekle</h3>
-    <div class="form-group">
+<div class="job-container">
+  
+  <div class="add-job-card">
+    <h2>{{ isEditing ? 'Başvuruyu Düzenle' : 'Yeni Başvuru Ekle' }}</h2>
+    
+    <div class="form-row">
       <input 
         type="text" 
         [(ngModel)]="newJob.company" 
-        placeholder="Şirket Adı (Örn: Getir)"
-      >
+        placeholder="Şirket Adı (Örn: Getir)" 
+      />
       <input 
         type="text" 
         [(ngModel)]="newJob.position" 
-        placeholder="Pozisyon (Örn: Frontend Dev)"
-      >
+        placeholder="Pozisyon (Örn: Frontend Dev)" 
+      />
+    </div>
+
+    <div class="form-row">
       <input 
         type="text" 
         [(ngModel)]="newJob.platform" 
-        placeholder="Platform (LinkedIn, Kariyer.net)"
-      >
-      <button (click)="addJob()" [disabled]="isLoading">
-        {{ isLoading ? '⏳ Ekleniyor...' : '➕ Ekle' }}
-      </button>
+        placeholder="Platform (LinkedIn, Kariyer.net)" 
+      />
+      
+      <div class="button-group">
+        <button 
+          *ngIf="isEditing" 
+          (click)="resetForm()" 
+          class="cancel-btn">
+          Vazgeç
+        </button>
+
+        <button 
+          (click)="addJob()" 
+          [disabled]="isLoading"
+          [class.update-btn]="isEditing" 
+          class="add-btn">
+          {{ isLoading ? 'İşleniyor...' : (isEditing ? 'Güncelle' : 'Ekle') }}
+        </button>
+      </div>
     </div>
   </div>
-  <hr>
-  <div *ngIf="jobs.length === 0">
-    <p>Henüz hiç başvuru yapmadın. Hadi başlayalım! 🚀</p>
+
+  <div class="job-list">
+    <p *ngIf="jobs.length === 0" class="empty-state">Henüz başvuru eklenmedi.</p>
+
+    <div *ngFor="let job of jobs" class="job-card">
+      <div class="job-info">
+        <h3>{{ job.position }}</h3>
+        <span class="company">{{ job.company }}</span>
+        
+        <div class="details">
+          <span class="platform" *ngIf="job.platform">📍 {{ job.platform }}</span>
+          <span class="status">Durum: {{ job.status || 'Başvuruldu' }}</span>
+        </div>
+      </div>
+
+      <div class="job-actions">
+        <button (click)="onEdit(job)" class="edit-btn">
+          Düzenle
+        </button>
+
+        <button (click)="deleteJob(job.id)" class="delete-btn">
+          Sil 🗑️
+        </button>
+      </div>
+    </div>
   </div>
 
-  <ul class="job-list">
-    <li *ngFor="let job of jobs" class="job-item">
-      <div class="job-header">
-        <h3>{{ job.company }}</h3>
-        <button class="delete-btn" (click)="deleteJob(job.id)">🗑️</button>
-      </div>
-      <p><strong>Pozisyon:</strong> {{ job.position }}</p>
-      <p><strong>Durum:</strong> {{ job.status }}</p>
-      <small>Tarih: {{ job.applicationDate | date:'short' }}</small>
-    </li>
-  </ul>
 </div>

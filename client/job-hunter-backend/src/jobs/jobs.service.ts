@@ -24,11 +24,13 @@ export class JobsService {
     return this.jobRepository.findOneBy({ id });
   }
 
-  update(id: number, updateJobDto: UpdateJobDto) {
-    return this.jobRepository.update(id, updateJobDto);
+  async update(id: number, updateJobDto: UpdateJobDto) {
+    await this.jobRepository.update(id, updateJobDto);
+    return this.findOne(id);
   }
 
   remove(id: number) {
     return this.jobRepository.delete(id);
   }
+  
 }
