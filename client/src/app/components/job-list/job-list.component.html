@@ -23,6 +23,14 @@
         placeholder="Platform (LinkedIn, Kariyer.net)" 
       />
       
+      <select [(ngModel)]="newJob.status" class="status-select">
+        <option value="">Durum Seçiniz...</option>
+        <option value="Başvuruldu">Başvuruldu 📩</option>
+        <option value="Mülakat">Mülakat 🗣️</option>
+        <option value="Teklif">Teklif 🤝</option>
+        <option value="Red">Red ❌</option>
+      </select>
+      
       <div class="button-group">
         <button 
           *ngIf="isEditing" 
@@ -43,9 +51,23 @@
   </div>
 
   <div class="job-list">
-    <p *ngIf="jobs.length === 0" class="empty-state">Henüz başvuru eklenmedi.</p>
+    
+    <div class="filter-area">
+      <label>Filtrele:</label>
+      <select [(ngModel)]="filterStatus">
+        <option value="ALL">Tümü</option>
+        <option value="Başvuruldu">Başvuruldu</option>
+        <option value="Mülakat">Mülakat</option>
+        <option value="Teklif">Teklif</option>
+        <option value="Red">Red</option>
+      </select>
+    </div>
 
-    <div *ngFor="let job of jobs" class="job-card">
+    <p *ngIf="filteredJobs.length === 0" class="empty-state">
+      Bu kriterde başvuru bulunamadı.
+    </p>
+
+    <div *ngFor="let job of filteredJobs" class="job-card">
       <div class="job-info">
         <h3>{{ job.position }}</h3>
         <span class="company">{{ job.company }}</span>

@@ -179,3 +179,30 @@ button {
   font-size: 1.2rem;
   margin-top: 2rem;
 }
+
+/* Filtre Alanı */
+.filter-area {
+  display: flex;
+  justify-content: flex-end; /* Sağa yasla */
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+
+  label { font-weight: bold; color: #7f8c8d; }
+
+  select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+  }
+}
+
+/* Formdaki Select Kutusu */
+.status-select {
+  flex: 1; /* Diğer inputlarla aynı boyda olsun */
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+}

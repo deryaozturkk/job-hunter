@@ -25,6 +25,9 @@ export class JobListComponent implements OnInit {
   // 👇 GÜNCELLEME İÇİN GEREKLİ DEĞİŞKENLER
   isEditing: boolean = false;       // Şu an düzenleme modunda mıyız?
   currentJobId: number | null = null; // Düzenlenen işin ID'si ne?
+
+  // Şu an hangi filtre seçili? (Varsayılan: HEPSİ)
+  filterStatus: string = 'ALL';
   
   constructor(private jobService: JobService) {}
 
@@ -40,6 +43,15 @@ export class JobListComponent implements OnInit {
       },
       error: (err) => console.error('Hata oluştu:', err)
     });
+  }
+
+  get filteredJobs() {
+    // Eğer 'Tümü' seçiliyse hepsini göster
+    if (this.filterStatus === 'ALL') {
+      return this.jobs;
+    }
+    // Değilse, sadece statüsü eşleşenleri göster (Örn: Sadece 'Mülakat' olanlar)
+    return this.jobs.filter(job => job.status === this.filterStatus);
   }
 
   // 👇 YENİ: Listeden "Düzenle" butonuna basınca çalışacak
