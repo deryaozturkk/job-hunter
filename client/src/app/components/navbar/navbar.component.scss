@@ -1,0 +1,42 @@
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Logo solda, Linkler sağda */
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #3b82f6; /* O güzel mavi renk */
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+  
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  
+    .nav-links {
+      list-style: none; /* Madde işaretlerini kaldır */
+      display: flex;
+      gap: 20px; /* Linkler arası boşluk */
+      margin: 0;
+      padding: 0;
+  
+      li {
+        a {
+          text-decoration: none; /* Alt çizgiyi kaldır */
+          color: white;
+          font-weight: 500;
+          transition: opacity 0.3s;
+  
+          &:hover {
+            opacity: 0.8; /* Üzerine gelince hafif sönükleşsin */
+          }
+          
+          /* Aktif olan linkin altını çizelim */
+          &.active-link { 
+            border-bottom: 2px solid white;
+          }
+        }
+      }
+    }
+  }
