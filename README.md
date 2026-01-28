@@ -51,6 +51,11 @@ Uygulama, kullanıcı deneyimini (UX) en üst düzeye çıkarmak için aşağıd
 - [ ] **Kimlik Doğrulama (Auth):** JWT (JSON Web Token) ile güvenli giriş ve kullanıcı kaydı.
 - [ ] **Karanlık Mod (Dark Mode):** Kullanıcı tercihine göre tema değişimi.
 
+## 📸 Ekran Görüntüleri
+
+| 📋 Başvuru Listesi | 📊 Dashboard Analizi |
+| :---: | :---: |
+| ![Dashboard](https://github.com/user-attachments/assets/916583c5-27b4-439d-babe-5c29a919dabf) | ![Liste](https://github.com/user-attachments/assets/ba32a994-a4e8-4a0a-955a-bd0cb0c7a1bd) |
 ---
 
 ## 🛠️ Kurulum ve Çalıştırma Rehberi
