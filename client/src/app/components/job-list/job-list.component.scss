@@ -1,208 +1,201 @@
-/* Sayfa Ortalaması ve Genel Düzen */
-.job-container {
-  max-width: 800px; /* Genişliği artırdık, daha ferah olsun */
-  margin: 2rem auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 0 1rem;
+$primary: #5e72e4;
+$success: #2dce89;
+$danger: #f5365c;
+$warning: #fb6340;
+$gray: #8898aa;
+
+.page-container {
+  padding-top: 30px;
+  padding-bottom: 50px;
 }
 
-/* 1. KART: Yeni Ekleme / Güncelleme Formu */
-.add-job-card {
-  background-color: #f8f9fa; /* Hafif gri arka plan */
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Hafif gölge */
-  margin-bottom: 2rem;
-
-  h2 {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    color: #2c3e50;
-    font-size: 1.5rem;
-  }
-
-  .form-row {
-    display: flex;
-    gap: 15px; /* Kutucuklar arası boşluk */
-    margin-bottom: 15px;
-
-    /* Mobilde alt alta geçsin diye */
-    @media (max-width: 600px) {
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    input {
-      flex: 1; /* Satırı kaplasın */
-      padding: 12px 15px;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border-color 0.3s;
-      outline: none;
-
-      &:focus {
-        border-color: #3498db; /* Tıklayınca mavi olsun */
-      }
-    }
-  }
-
-  .button-group {
-    display: flex;
-    /* Buton grubu input gibi davranmasın, kendi boyutunda kalsın */
-    flex: 0 0 auto; 
-  }
-}
-
-/* BUTONLAR (Genel) */
-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 1rem;
-
-  /* Ekle Butonu (Yeşil) */
-  &.add-btn {
-    background-color: #2ecc71;
-    color: white;
-
-    &:hover { background-color: #27ae60; }
-    &:disabled { background-color: #bdc3c7; cursor: not-allowed; }
-  }
-
-  /* Güncelle Butonu (Turuncu) */
-  &.update-btn {
-    background-color: #f39c12 !important;
-    color: white;
-    &:hover { background-color: #e67e22 !important; }
-  }
-
-  /* Vazgeç Butonu (Gri) */
-  &.cancel-btn {
-    background-color: #95a5a6;
-    color: white;
-    margin-right: 10px;
-    &:hover { background-color: #7f8c8d; }
-  }
-}
-
-/* 2. LİSTE: İş Kartları */
-.job-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.job-card {
-  background: white;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  padding: 1.5rem;
+// ÜST KISIM
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-  transition: transform 0.2s;
+  margin-bottom: 25px;
 
-  &:hover {
-    transform: translateY(-2px); /* Üzerine gelince hafif yukarı kalksın */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #32325d;
+    margin-bottom: 5px;
   }
+  p { color: $gray; margin: 0; font-size: 0.9rem; }
 
-  .job-info {
-    h3 {
-      margin: 0 0 5px 0;
-      color: #2c3e50;
-      font-size: 1.25rem;
-    }
+  // Yeni Ekle Butonu
+  .btn-add {
+    background: linear-gradient(87deg, $primary 0, #825ee4 100%);
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11);
+    transition: all 0.3s;
+    cursor: pointer;
 
-    .company {
-      font-weight: 500;
-      color: #7f8c8d;
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .details {
-      font-size: 0.9rem;
-      color: #95a5a6;
-      display: flex;
-      gap: 15px;
-
-      .status {
-        color: #34495e;
-        font-weight: bold;
-      }
-    }
-  }
-
-  .job-actions {
-    display: flex;
-    gap: 10px;
-
-    /* Liste içindeki butonlar biraz daha küçük olsun */
-    button {
-      padding: 8px 12px;
-      font-size: 0.9rem;
-    }
-
-    .edit-btn {
-      background-color: transparent;
-      border: 1px solid #3498db;
-      color: #3498db;
-
-      &:hover {
-        background-color: #3498db;
-        color: white;
-      }
-    }
-
-    .delete-btn {
-      background-color: transparent;
-      border: 1px solid #e74c3c;
-      color: #e74c3c;
-
-      &:hover {
-        background-color: #e74c3c;
-        color: white;
-      }
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1);
     }
   }
 }
 
-.empty-state {
-  text-align: center;
-  color: #bdc3c7;
-  font-size: 1.2rem;
-  margin-top: 2rem;
+// TABLO KARTI (Beyaz Kutu)
+.table-card {
+  background: white;
+  border-radius: 12px; // Yuvarlak köşeler
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1); // Dashboard ile aynı gölge
+  padding: 20px;
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* Filtre Alanı */
-.filter-area {
+// ARAMA ÇUBUĞU
+.search-bar {
+  background: #f6f9fc;
+  padding: 10px 15px;
+  border-radius: 8px;
   display: flex;
-  justify-content: flex-end; /* Sağa yasla */
   align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 300px; // Çok uzamasın
 
-  label { font-weight: bold; color: #7f8c8d; }
+  input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    color: #32325d;
+    font-weight: 500;
+    &::placeholder { color: #adb5bd; }
+  }
+  i { color: #adb5bd; }
+}
 
-  select {
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
+// TABLO STİLLERİ
+.custom-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px; // Satırlar arası boşluk (opsiyonel)
+
+  thead th {
+    background: #f6f9fc; // Başlık satırı rengi
+    color: $gray;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    padding: 15px;
+    font-weight: 600;
+    &:first-child { border-radius: 8px 0 0 8px; }
+    &:last-child { border-radius: 0 8px 8px 0; }
+  }
+
+  tbody td {
+    vertical-align: middle;
+    border-top: 1px solid #f0f0f0; // İnce çizgi
+    padding: 15px;
+    color: #525f7f;
+    font-size: 0.9rem;
+  }
+
+  // Şirket Logosu (Placeholder)
+  .logo-placeholder {
+    width: 35px;
+    height: 35px;
+    background: #e9ecef;
+    color: $primary;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 12px;
+  }
+  .company-info { display: flex; align-items: center; }
+}
+
+// BADGE (Durum Etiketleri)
+.badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  &.badge-warning { background: rgba(251, 99, 64, 0.1); color: $warning; }
+  &.badge-danger { background: rgba(245, 54, 92, 0.1); color: $danger; }
+  &.badge-success { background: rgba(45, 206, 137, 0.1); color: $success; }
+  &.badge-primary { background: rgba(94, 114, 228, 0.1); color: $primary; }
+  &.badge-secondary { background: #e9ecef; color: $gray; }
+}
+
+// İŞLEM BUTONLARI
+.action-buttons {
+  .btn-icon {
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
     cursor: pointer;
+    margin-left: 10px;
+    transition: transform 0.2s;
+    opacity: 0.7;
+
+    &:hover { opacity: 1; transform: scale(1.2); }
+    &.edit { filter: grayscale(1); &:hover { filter: none; } } // İsteğe bağlı
+    &.delete { filter: grayscale(1); &:hover { filter: none; } }
   }
 }
 
-/* Formdaki Select Kutusu */
-.status-select {
-  flex: 1; /* Diğer inputlarla aynı boyda olsun */
-  padding: 12px 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: white;
+.form-card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.05);
+  animation: slideDown 0.3s ease-out;
+
+  .form-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #32325d;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #525f7f;
+    margin-bottom: 5px;
+  }
+
+  .form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    padding: 10px 15px;
+    &:focus {
+      border-color: #5e72e4;
+      box-shadow: 0 0 0 3px rgba(94, 114, 228, 0.1);
+    }
+  }
+}
+
+// Butonlar
+.btn-primary {
+  background-color: #5e72e4;
+  border: none;
+  padding: 10px 25px;
+  &:hover { background-color: darken(#5e72e4, 5%); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

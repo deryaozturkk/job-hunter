@@ -12,6 +12,11 @@ export interface Job {
   applicationDate: Date;
 }
 
+export interface JobStats {
+  status: string;
+  count: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,5 +40,8 @@ export class JobService {
   }
   updateJob(id: number, job: Job): Observable<Job> {
     return this.http.patch<Job>(`${this.apiUrl}/${id}`, job);
+  }
+  getJobStats(): Observable<JobStats[]> {
+    return this.http.get<JobStats[]>(this.apiUrl + '/stats');
   }
 }

@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+/* Sayfa zıplamasını engellemek için */
+html {
+    overflow-y: scroll; /* Scrollbar her zaman görünür (pasif olsa bile) */
+  }
+  
+  body {
+    margin: 0;
+    background-color: #f8f9fe; // Tüm arka planı burada sabitleyelim
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }

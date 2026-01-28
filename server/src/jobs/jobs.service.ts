@@ -33,4 +33,13 @@ export class JobsService {
     return this.jobRepository.delete(id);
   }
   
+  // İstatistikleri getiren metot
+  async getJobStats() {
+    return this.jobRepository
+      .createQueryBuilder('job')
+      .select('job.status', 'status')
+      .addSelect('COUNT(job.id)', 'count')
+      .groupBy('job.status')
+      .getRawMany();
+  }
 }

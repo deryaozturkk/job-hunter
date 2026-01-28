@@ -1,40 +1,97 @@
-import { Component } from '@angular/core';
-import { BaseChartDirective } from 'ng2-charts'; // Grafik direktifi
-import { ChartData, ChartType, ChartOptions } from 'chart.js'; // Tipler
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BaseChartDirective } from 'ng2-charts'; // <-- DEĞİŞİKLİK 1: Yeni import bu
+import { ChartOptions , ChartDataset} from 'chart.js';
+import { JobService, JobStats } from '../../services/job.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  // 👇 Bunu eklemeyi unutma, grafiğin çalışması için şart!
-  imports: [BaseChartDirective], 
+  imports: [CommonModule, BaseChartDirective], // <-- DEĞİŞİKLİK 2: Modül yerine Direktif
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
-  
-  // --- 1. PASTA GRAFİK (Başvuru Durumları) ---
-  
-  // Grafiğin Tipi
-  public pieChartType: ChartType = 'pie';
+export class DashboardComponent implements OnInit {
 
-  // Grafiğin Verisi (Şimdilik elle yazıyoruz)
-  public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: ['Başvuruldu', 'Mülakat', 'Red', 'Teklif'], // Etiketler
-    datasets: [
-      {
-        data: [10, 5, 2, 1], // Sayılar (10 Başvuru, 5 Mülakat...)
-        backgroundColor: ['#3498db', '#f1c40f', '#e74c3c', '#2ecc71'], // Renkler
-      },
-    ],
-  };
+  public totalCount: number = 0;
+  public ongoingCount: number = 0;
+  public rejectedCount: number = 0;
 
-  // Grafik Ayarları (Opsiyonel)
-  public pieChartOptions: ChartOptions = {
+  public pieChartOptions: ChartOptions<'doughnut'> = {
     responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-    },
+    cutout: '60%', // Ortasının ne kadar boş olacağı (%60 ideal)
+  plugins: {
+    legend: {
+      position: 'bottom', // Etiketleri alta alalım, daha şık durur
+      labels: {
+        usePointStyle: true, // Kare yerine yuvarlak nokta kullansın
+        padding: 20
+      }
+    }
+  }
   };
+  public pieChartLabels: string[] = [];
+  public pieChartDatasets : ChartDataset<'doughnut', number[]>[]= [ {
+    data: [] as number[],
+    backgroundColor: ['#FFA726', '#EF5350', '#66BB6A', '#42A5F5', '#78909C']
+  } ];
+  public pieChartLegend = true;
+  // public pieChartPlugins = []; // Eğer hata verirse bunu silebilirsin, şart değil
+
+  constructor(private jobService: JobService) {}
+
+  ngOnInit() {
+    this.loadStats();
+  }
+
+  loadStats() {
+    this.jobService.getJobStats().subscribe({
+      next: (data: JobStats[]) => {
+        // 1. Etiketleri ve Sayıları Al
+        const labels = data.map(item => item.status);
+        const counts = data.map(item => Number(item.count));
+
+        // 2. Etiketleri Grafiğe Ver
+        this.pieChartLabels = labels;
+
+        // 3. Her bir statü için ÖZEL rengini bul ve listeye ekle
+        // (Gelen veri sayısı kadar renk içeren bir dizi oluşturuyoruz)
+        const dynamicColors = labels.map(status => this.getColorForStatus(status));
+
+        // 4. Veri Setini Güncelle
+        this.pieChartDatasets = [{
+          data: counts,
+          backgroundColor: dynamicColors, // Dinamik renk dizisi
+          hoverBackgroundColor: dynamicColors, // Üzerine gelince aynı renk kalsın veya koyulaştırabilirsin
+          borderColor: '#ffffff', // Dilimlerin arasına beyaz çizgi atar (daha şık durur)
+          borderWidth: 2
+        }];
+        this.calculateTotals(data);
+        console.log('Oluşan Renkler:', dynamicColors); // Konsoldan kontrol edelim
+      },
+      error: (err) => console.error('Hata:', err)
+    });
+  }
+  getColorForStatus(status: string): string {
+    switch (status.toLowerCase()) { // Küçük harfe çevirip kontrol edelim
+      case 'mülakat': return '#FFA726'; // Turuncu
+      case 'red': return '#EF5350';     // Kırmızı
+      case 'teklif': return '#66BB6A';  // Yeşil
+      case 'başvuruldu': return '#AB47BC'; // Mor
+      default: return '#78909C';        // Tanımsızsa Gri
+    }
+  }
+
+  calculateTotals(data: JobStats[]) {
+    // 1. TOPLAM BAŞVURU: Hepsini topla
+    // reduce fonksiyonu: Bir diziyi tek bir sayıya indirger (Kumbara mantığı)
+    this.totalCount = data.reduce((toplam, item) => toplam + Number(item.count), 0);
+
+    // 2. REDDEDİLENLER: Sadece statüsü 'red' olanları bul ve sayısını al
+    const redItem = data.find(item => item.status.toLowerCase() === 'red');
+    this.rejectedCount = redItem ? Number(redItem.count) : 0; // Eğer hiç red yoksa 0 olsun
+
+    // 3. DEVAM EDENLER: Toplamdan redleri çıkar (Geriye kalan her şey devam ediyordur)
+    this.ongoingCount = this.totalCount - this.rejectedCount;
+  }
 }

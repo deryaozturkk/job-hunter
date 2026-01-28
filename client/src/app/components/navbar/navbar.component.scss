@@ -1,42 +1,122 @@
+$primary-color: #5e72e4;
+$text-color: #32325d;
+$bg-color: #ffffff;
+
 .navbar {
+  background-color: $bg-color;
+  height: 80px; // Biraz daha tok dursun
+  padding: 0 40px; // Kenarlardan boşluk bırakalım ki yapışmasın
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(0,0,0,0.03);
+
+  .navbar-container {
     display: flex;
-    justify-content: space-between; /* Logo solda, Linkler sağda */
+    justify-content: space-between; // Sihir burada: Biri en sola, biri en sağa!
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: #3b82f6; /* O güzel mavi renk */
-    color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    font-family: 'Segoe UI', sans-serif;
-  
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      cursor: pointer;
+    width: 100%;
+    height: 100%;
+    // max-width sınırını kaldırdık veya çok genişlettik ki ortada toplanmasınlar
+    max-width: 1600px; 
+    margin: 0 auto;
+  }
+}
+
+// SOL TARAF: LOGO
+.navbar-brand {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover { transform: scale(1.02); }
+
+  .icon {
+    font-size: 1.6rem;
+    background: rgba(94, 114, 228, 0.1);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+  }
+
+  .text {
+    font-size: 1.4rem;
+    font-weight: 800; // Daha kalın font
+    color: $text-color;
+    letter-spacing: -0.5px;
+  }
+}
+
+// SAĞ TARAF GRUBU (Linkler + Avatar)
+.navbar-right-side {
+  display: flex;
+  align-items: center;
+  gap: 30px; // Linkler ile Avatar arasındaki boşluk
+}
+
+// MENÜ LİNKLERİ
+.nav-links {
+  display: flex;
+  gap: 15px; // Butonlar arası boşluk
+  background: #f6f9fc; // Linklerin arkasına hafif bir havuz yapalım
+  padding: 5px;
+  border-radius: 50px;
+
+  .nav-item {
+    text-decoration: none;
+    color: #8898aa;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 10px 25px; // Buton içi genişlik
+    border-radius: 40px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: $primary-color;
+      background-color: rgba(94, 114, 228, 0.05);
     }
-  
-    .nav-links {
-      list-style: none; /* Madde işaretlerini kaldır */
-      display: flex;
-      gap: 20px; /* Linkler arası boşluk */
-      margin: 0;
-      padding: 0;
-  
-      li {
-        a {
-          text-decoration: none; /* Alt çizgiyi kaldır */
-          color: white;
-          font-weight: 500;
-          transition: opacity 0.3s;
-  
-          &:hover {
-            opacity: 0.8; /* Üzerine gelince hafif sönükleşsin */
-          }
-          
-          /* Aktif olan linkin altını çizelim */
-          &.active-link { 
-            border-bottom: 2px solid white;
-          }
-        }
-      }
+
+    &.active {
+      color: #fff;
+      background-color: $primary-color;
+      box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11);
     }
   }
+}
+
+// PROFİL
+.user-profile {
+  padding-left: 20px; // Linklerden biraz ayıralım (opsiyonel çizgi için)
+  border-left: 1px solid #e9ecef; // İnce ayırıcı çizgi
+  height: 40px;
+  display: flex;
+  align-items: center;
+
+  .avatar {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, #fb6340 0%, #fbb140 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(251, 99, 64, 0.3); // Avatarın kendi gölgesi
+    transition: transform 0.2s;
+    
+    &:hover { transform: scale(1.1); }
+  }
+}

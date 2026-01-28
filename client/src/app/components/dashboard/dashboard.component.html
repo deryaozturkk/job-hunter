@@ -1,12 +1,62 @@
-<div class="dashboard-container">
-    <h2>📊 Başvuru Analizi</h2>
+<div class="container-fluid dashboard-container">
   
-    <div class="chart-wrapper">
-      <canvas 
-        baseChart
-        [data]="pieChartData"
-        [type]="pieChartType"
-        [options]="pieChartOptions">
+  <div class="section-header">
+    <h2>🚀 Genel Bakış</h2>
+    <p class="subtitle">Kariyer yolculuğundaki son durumun</p>
+  </div>
+
+  <div class="stats-cards">
+    
+    <div class="card total">
+      <div class="card-content">
+        <div class="icon-box">💼</div>
+        <div class="info">
+          <div class="title">Toplam Başvuru</div>
+          <div class="count">{{ totalCount }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card ongoing">
+      <div class="card-content">
+        <div class="icon-box">⏳</div>
+        <div class="info">
+          <div class="title">Süreci Devam Eden</div>
+          <div class="count">{{ ongoingCount }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card rejected">
+      <div class="card-content">
+        <div class="icon-box">⛔</div>
+        <div class="info">
+          <div class="title">Reddedilen</div>
+          <div class="count">{{ rejectedCount }}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-header mt-5">
+    <h2>📊 Durum Analizi</h2>
+    <p class="subtitle">Başvurularının oransal dağılımı</p>
+  </div>
+  
+  <div class="row justify-content-center chart-area">
+    <div class="col-md-8 col-lg-5" *ngIf="pieChartLabels.length > 0">
+       <canvas baseChart
+            [type]="'doughnut'"
+            [datasets]="pieChartDatasets"
+            [labels]="pieChartLabels"
+            [options]="pieChartOptions"
+            [legend]="pieChartLegend">
       </canvas>
     </div>
   </div>
+
+  <p *ngIf="pieChartLabels.length === 0" class="text-center mt-3 text-muted">
+    Henüz gösterilecek veri yok.
+  </p>
+</div>

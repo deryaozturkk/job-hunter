@@ -1,8 +1,13 @@
 # 🏹 Job Hunter - Kişisel İş Başvuru Takip Sistemi
 
+![Angular](https://img.shields.io/badge/Angular-v17-red?style=flat-square)
+![NestJS](https://img.shields.io/badge/NestJS-v10-E0234E?style=flat-square)
+
 **Job Hunter**, iş arama sürecindeki karmaşayı ortadan kaldırmak, başvuruları tek bir merkezden yönetmek ve süreci verilerle analiz etmek için geliştirilmiş modern bir **Full-Stack** web uygulamasıdır.
 
-Sıradan bir "To-Do List" uygulamasının ötesinde; **Job Hunter** başvuruların durumunu (Mülakat, Red, Teklif) takip eder ve görsel grafiklerle sürecin analizini sunar.
+Sıradan bir Excel tablosunun ötesinde; **Job Hunter** başvuruların durumunu (Mülakat, Red, Teklif) takip eder, **görsel grafiklerle** analiz sunar ve size **profesyonel bildirimlerle** geri bildirim verir.
+
+---
 
 ## 🚀 Kullanılan Teknolojiler
 
@@ -12,30 +17,35 @@ Bu proje, sektör standartlarında kabul gören modern mimari prensipleri ve gü
 * **NestJS** (Node.js Framework - Modüler Mimari)
 * **TypeScript** (Tip Güvenliği / Type-Safety)
 * **PostgreSQL** (İlişkisel Veritabanı)
-* **TypeORM** (ORM & Veritabanı Yönetimi)
-* **RESTful API** (İstemci-Sunucu İletişimi)
+* **TypeORM** (ORM & Veritabanı Yönetimi - QueryBuilder)
+* **RESTful API** (CRUD İşlemleri)
 
 ### **Frontend (İstemci Tarafı)**
 * **Angular 17+** (Standalone Components & Modern Mimari)
-* **TypeScript**
-* **RxJS** (Reaktif Programlama & Observable Yapısı)
-* **ng2-charts & Chart.js** (Veri Görselleştirme ve Dashboard)
-* **SCSS (Sass)** (Gelişmiş CSS Yönetimi)
+* **Bootstrap 5** (Responsive Grid & Modern UI Bileşenleri)
+* **SweetAlert2** (Profesyonel Bildirim ve Onay Pencereleri)
+* **ng2-charts & Chart.js** (Doughnut Chart ile Veri Görselleştirme)
+* **RxJS** (Reaktif Programlama)
+* **SCSS** (Gelişmiş Stil Yönetimi)
 
 ---
 
-## 📊 Proje Özellikleri ve Yol Haritası (Roadmap)
+## 📊 Proje Özellikleri
 
-Proje aktif geliştirme aşamasındadır. Tamamlanan ve planlanan özellikler aşağıdadır:
+Uygulama, kullanıcı deneyimini (UX) en üst düzeye çıkarmak için aşağıdaki özelliklerle donatılmıştır:
 
-### ✅ Tamamlanan Özellikler
-- [x] **İş Takibi (CRUD):** Yeni iş ilanı ekleme, düzenleme, silme ve listeleme.
-- [x] **Dinamik Filtreleme:** Başvuruları statüsüne göre (Mülakat, Beklemede, Red vb.) anlık filtreleme.
-- [x] **Analitik Dashboard:** Başvuru dağılımlarını gösteren görsel analiz ekranı (Pasta Grafik).
-- [x] **Responsive UI:** Masaüstü ve mobil cihazlarla uyumlu, esnek ve modern arayüz tasarımı.
-- [x] **Modern Navigasyon:** Angular Router ile sayfa yenilenmeden hızlı geçişler (SPA).
+### ✅ Temel Özellikler
+- [x] **📋 Gelişmiş İş Takibi:** Şirket, pozisyon, platform ve tarih bilgileriyle başvuru ekleme, düzenleme ve silme.
+- [x] **🔍 Akıllı Arama Motoru:** Şirket adı, pozisyon veya platforma göre anlık (real-time) arama yapabilme.
+- [x] **🏷️ Renkli Durum Yönetimi:** Başvuruların durumuna göre (Mülakat=Turuncu, Red=Kırmızı, Teklif=Yeşil) otomatik renklenen "Badge" sistemi.
+- [x] **🛡️ Validasyon Kontrolleri:** Eksik veri girişini engelleme ve ileri tarihli kayıt koruması.
 
-### 🔜 Gelecek Planları (To-Do)
+### ✅ Analiz ve Görsellik
+- [x] **📈 Analitik Dashboard:** Başvuru dağılımlarını gösteren modern "Doughnut" grafik ve özet bilgi kartları.
+- [x] **🔔 Profesyonel Bildirimler:** İşlem başarı/hata durumlarında sağ üstten çıkan modern "Toast" bildirimleri ve silme işlemi için "Emin misin?" onay penceresi.
+- [x] **📱 Tam Responsive:** Mobil, tablet ve masaüstü uyumlu esnek tasarım.
+
+### 🔜 Gelecek Planları (Roadmap)
 - [ ] **Detay Sayfaları:** Her başvuru için mülakat notları, tarihçe ve link saklama alanı.
 - [ ] **AI Asistanı (Entegrasyon):** Google Gemini API kullanarak iş tanımına uygun CV tavsiyeleri alma.
 - [ ] **Kimlik Doğrulama (Auth):** JWT (JSON Web Token) ile güvenli giriş ve kullanıcı kaydı.

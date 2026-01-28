@@ -1,93 +1,112 @@
-<div class="job-container">
+<div class="container page-container">
   
-  <div class="add-job-card">
-    <h2>{{ isEditing ? 'Başvuruyu Düzenle' : 'Yeni Başvuru Ekle' }}</h2>
-    
-    <div class="form-row">
-      <input 
-        type="text" 
-        [(ngModel)]="newJob.company" 
-        placeholder="Şirket Adı (Örn: Getir)" 
-      />
-      <input 
-        type="text" 
-        [(ngModel)]="newJob.position" 
-        placeholder="Pozisyon (Örn: Frontend Dev)" 
-      />
+  <div class="page-header">
+    <div class="header-left">
+      <h2>🗂️ İş Başvurularım</h2>
+      <p>Kariyer yolculuğunu buradan takip et.</p>
     </div>
-
-    <div class="form-row">
-      <input 
-        type="text" 
-        [(ngModel)]="newJob.platform" 
-        placeholder="Platform (LinkedIn, Kariyer.net)" 
-      />
-      
-      <select [(ngModel)]="newJob.status" class="status-select">
-        <option value="">Durum Seçiniz...</option>
-        <option value="Başvuruldu">Başvuruldu 📩</option>
-        <option value="Mülakat">Mülakat 🗣️</option>
-        <option value="Teklif">Teklif 🤝</option>
-        <option value="Red">Red ❌</option>
-      </select>
-      
-      <div class="button-group">
-        <button 
-          *ngIf="isEditing" 
-          (click)="resetForm()" 
-          class="cancel-btn">
-          Vazgeç
-        </button>
-
-        <button 
-          (click)="addJob()" 
-          [disabled]="isLoading"
-          [class.update-btn]="isEditing" 
-          class="add-btn">
-          {{ isLoading ? 'İşleniyor...' : (isEditing ? 'Güncelle' : 'Ekle') }}
-        </button>
-      </div>
-    </div>
+    <button class="btn-add" (click)="toggleForm()">
+      <span>{{ showForm ? '-' : '+' }}</span> {{ showForm ? 'Vazgeç' : 'Yeni Ekle' }}
+    </button>
   </div>
 
-  <div class="job-list">
+  <div class="form-card mb-4" *ngIf="showForm">
+    <h4 class="form-title">{{ isEditing ? '✏️ Başvuruyu Düzenle' : '✨ Yeni Başvuru Ekle' }}</h4>
     
-    <div class="filter-area">
-      <label>Filtrele:</label>
-      <select [(ngModel)]="filterStatus">
-        <option value="ALL">Tümü</option>
-        <option value="Başvuruldu">Başvuruldu</option>
-        <option value="Mülakat">Mülakat</option>
-        <option value="Teklif">Teklif</option>
-        <option value="Red">Red</option>
-      </select>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label>Şirket Adı</label>
+        <input type="text" class="form-control" [(ngModel)]="newJob.company" placeholder="Örn: Google">
+      </div>
+      <div class="col-md-6">
+        <label>Pozisyon</label>
+        <input type="text" class="form-control" [(ngModel)]="newJob.position" placeholder="Örn: Frontend Dev">
+      </div>
+      <div class="col-md-4">
+        <label>Platform</label>
+        <input type="text" class="form-control" [(ngModel)]="newJob.platform" placeholder="Linkedin, Kariyer.net">
+      </div>
+      <div class="col-md-4">
+        <label>Durum</label>
+        <select class="form-select" [(ngModel)]="newJob.status">
+          <option value="Başvuruldu">Başvuruldu</option>
+          <option value="Mülakat">Mülakat</option>
+          <option value="Teklif">Teklif</option>
+          <option value="Red">Red</option>
+          <option value="Beklemede">Beklemede</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label>Tarih</label>
+        <input type="date" class="form-control" [max]="todayDate" [ngModel]="newJob.applicationDate | date:'yyyy-MM-dd'" (ngModelChange)="newJob.applicationDate=$event">
+      </div>
     </div>
 
-    <p *ngIf="filteredJobs.length === 0" class="empty-state">
-      Bu kriterde başvuru bulunamadı.
-    </p>
-
-    <div *ngFor="let job of filteredJobs" class="job-card">
-      <div class="job-info">
-        <h3>{{ job.position }}</h3>
-        <span class="company">{{ job.company }}</span>
-        
-        <div class="details">
-          <span class="platform" *ngIf="job.platform">📍 {{ job.platform }}</span>
-          <span class="status">Durum: {{ job.status || 'Başvuruldu' }}</span>
+    <div class="form-actions mt-4 text-end">
+      <button class="btn btn-secondary me-2" (click)="toggleForm()">İptal</button>
+      <button class="btn btn-primary" (click)="saveJob()" [disabled]="isLoading">
+        {{ isEditing ? 'Güncelle' : 'Kaydet' }}
+      </button>
+    </div>
+  </div>
+  <div class="table-card">
+    
+    <div class="d-flex justify-content-between mb-3 align-items-center flex-wrap gap-2">
+      <div class="search-wrapper">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" [(ngModel)]="searchTerm" placeholder="Şirket ara...">
         </div>
       </div>
-
-      <div class="job-actions">
-        <button (click)="onEdit(job)" class="edit-btn">
-          Düzenle
-        </button>
-
-        <button (click)="deleteJob(job.id)" class="delete-btn">
-          Sil 🗑️
-        </button>
+      
+      <div class="filter-wrapper">
+        <select class="form-select" [(ngModel)]="filterStatus">
+          <option value="ALL">Tüm Başvurular</option>
+          <option value="Başvuruldu">Başvuruldu</option>
+          <option value="Mülakat">Mülakat</option>
+          <option value="Red">Red</option>
+          <option value="Teklif">Teklif</option>
+        </select>
       </div>
     </div>
-  </div>
 
+    <div class="table-responsive">
+      <table class="table custom-table">
+        <thead>
+          <tr>
+            <th>Şirket</th>
+            <th>Pozisyon</th>
+            <th>Platform</th>
+            <th>Tarih</th>
+            <th>Durum</th>
+            <th class="text-end">İşlemler</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="isLoading && !showForm">
+            <td colspan="6" class="text-center py-5">Yükleniyor...</td>
+          </tr>
+
+          <tr *ngFor="let job of filteredJobs">
+            <td>
+              <div class="company-info">
+                <div class="logo-placeholder">{{ job.company.charAt(0).toUpperCase() }}</div>
+                <div class="company-name">{{ job.company }}</div>
+              </div>
+            </td>
+            <td class="fw-bold">{{ job.position }}</td>
+            <td><span class="platform-tag">{{ job.platform }}</span></td>
+            <td class="text-muted">{{ job.applicationDate | date:'dd MMM yyyy' }}</td>
+            <td>
+              <span class="badge" [ngClass]="getStatusClass(job.status)">{{ job.status }}</span>
+            </td>
+            <td class="text-end action-buttons">
+              <button class="btn-icon edit" (click)="onEdit(job)">✏️</button>
+              <button class="btn-icon delete" (click)="deleteJob(job.id)">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
