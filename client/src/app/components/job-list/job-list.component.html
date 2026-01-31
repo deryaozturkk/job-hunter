@@ -5,6 +5,46 @@
       <h2>🗂️ İş Başvurularım</h2>
       <p>Kariyer yolculuğunu buradan takip et.</p>
     </div>
+    <div class="header-actions d-flex align-items-center gap-3">
+      
+      <button class="theme-btn" (click)="toggleTheme()" 
+              [title]="isDarkMode ? 'Aydınlık Mod' : 'Karanlık Mod'">
+        <i class="bi bi-sun-fill" *ngIf="isDarkMode" style="color: #ffc107;"></i>
+        <i class="bi bi-moon-stars-fill" *ngIf="!isDarkMode" style="color: #5e72e4;"></i>
+      </button>
+
+      <div class="dropdown">
+        
+        <button class="export-btn" type="button" (click)="toggleExport($event)">
+          <span class="icon">📤</span> 
+          <span class="text">Dışa Aktar</span>
+          
+          <i class="bi bi-chevron-down ms-2" 
+             [style.transform]="isExportOpen ? 'rotate(180deg)' : 'rotate(0deg)'" 
+             style="font-size: 0.8rem; transition: transform 0.2s;"></i>
+        </button>
+        
+        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" 
+            [class.show]="isExportOpen" 
+            style="border-radius: 12px; overflow: hidden;">
+            
+          <li>
+            <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" (click)="confirmExport()">
+              <i class="bi bi-file-earmark-excel-fill" style="color: #2dce89; font-size: 1.2rem;"></i> 
+              <span style="font-weight: 500; color: #525f7f;">Excel İndir (.xlsx)</span>
+            </a>
+          </li>
+          <li><hr class="dropdown-divider my-1"></li>
+          <li>
+            <a class="dropdown-item disabled d-flex align-items-center gap-2 py-2" href="#">
+              <i class="bi bi-file-earmark-pdf" style="color: #adb5bd; font-size: 1.2rem;"></i>
+              <span class="text-muted">PDF (Yakında)</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+    </div>
     <button class="btn-add" (click)="toggleForm()">
       <span>{{ showForm ? '-' : '+' }}</span> {{ showForm ? 'Vazgeç' : 'Yeni Ekle' }}
     </button>
@@ -16,15 +56,16 @@
     <div class="row g-3">
       <div class="col-md-6">
         <label>Şirket Adı</label>
-        <input type="text" class="form-control" [(ngModel)]="newJob.company" placeholder="Örn: Google">
+        <input type="text" class="form-control form-control" [(ngModel)]="newJob.company" placeholder="Örn: Google">
       </div>
       <div class="col-md-6">
         <label>Pozisyon</label>
-        <input type="text" class="form-control" [(ngModel)]="newJob.position" placeholder="Örn: Frontend Dev">
+        <input type="text" class="form-control form-control" [(ngModel)]="newJob.position" placeholder="Örn: Frontend Dev">
       </div>
+
       <div class="col-md-4">
-        <label>Platform</label>
-        <input type="text" class="form-control" [(ngModel)]="newJob.platform" placeholder="Linkedin, Kariyer.net">
+        <label>Tarih</label>
+        <input type="date" class="form-control" [max]="todayDate" [ngModel]="newJob.applicationDate | date:'yyyy-MM-dd'" (ngModelChange)="newJob.applicationDate=$event">
       </div>
       <div class="col-md-4">
         <label>Durum</label>
@@ -37,8 +78,21 @@
         </select>
       </div>
       <div class="col-md-4">
-        <label>Tarih</label>
-        <input type="date" class="form-control" [max]="todayDate" [ngModel]="newJob.applicationDate | date:'yyyy-MM-dd'" (ngModelChange)="newJob.applicationDate=$event">
+        <label>Platform</label>
+        <select class="form-select" [(ngModel)]="newJob.platform">
+          <option value="" disabled selected>Seçiniz...</option> <option value="LinkedIn">LinkedIn</option>
+          <option value="Kariyer.net">Kariyer.net</option>
+          <option value="Diğer">Diğer</option>
+        </select>
+      </div>
+
+      <div class="col-12">
+        <label>İlan Linki (URL)</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light">🌐</span>
+          <input type="url" class="form-control" [(ngModel)]="newJob.url" placeholder="https://...">
+        </div>
+        <small class="text-muted ms-1">İlanın direkt linkini buraya yapıştırabilirsiniz.</small>
       </div>
     </div>
 
@@ -49,6 +103,7 @@
       </button>
     </div>
   </div>
+  
   <div class="table-card">
     
     <div class="d-flex justify-content-between mb-3 align-items-center flex-wrap gap-2">
@@ -95,18 +150,52 @@
               </div>
             </td>
             <td class="fw-bold">{{ job.position }}</td>
-            <td><span class="platform-tag">{{ job.platform }}</span></td>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                
+                <span class="platform-tag">{{ job.platform }}</span>
+                
+                <a *ngIf="job.url" 
+                   [href]="job.url" 
+                   target="_blank" 
+                   class="url-link-btn" 
+                   title="İlana Git">
+                  <i class="bi bi-box-arrow-up-right"></i> 
+                </a>
+                
+              </div>
+            </td>
             <td class="text-muted">{{ job.applicationDate | date:'dd MMM yyyy' }}</td>
             <td>
               <span class="badge" [ngClass]="getStatusClass(job.status)">{{ job.status }}</span>
             </td>
             <td class="text-end action-buttons">
-              <button class="btn-icon edit" (click)="onEdit(job)">✏️</button>
-              <button class="btn-icon delete" (click)="deleteJob(job.id)">🗑️</button>
+              <button class="btn-icon edit" (click)="onEdit(job)" title="Düzenle">✏️</button>
+              
+              <button class="btn-icon note" (click)="openNoteModal(job)" title="Notlar">
+                <i class="bi" 
+                   [class.bi-journal-bookmark-fill]="job.note" 
+                   [class.bi-journal-plus]="!job.note"
+                   [style.color]="job.note ? '#fb6340' : '#8898aa'"></i>
+              </button>
+
+              <button class="btn-icon delete" (click)="deleteJob(job.id)" title="Sil">🗑️</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <div *ngIf="filteredJobs.length === 0 && !isLoading" class="text-center py-5 fade-in">
+      <div class="mb-3" style="font-size: 3rem; opacity: 0.5;">
+        🕵️‍♂️
+      </div>
+      <h4 class="text-muted fw-bold">Sonuç Bulunamadı</h4>
+      <p class="text-muted">
+        Aradığın kriterlere uygun bir iş kaydı yok. <br>
+        Yeni bir tane eklemeye ne dersin?
+      </p>
+    </div>
+    
   </div>
 </div>

@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit {
   public totalCount: number = 0;
   public ongoingCount: number = 0;
   public rejectedCount: number = 0;
+  isDarkMode: boolean = false; // Dark mode kontrolü
 
   public pieChartOptions: ChartOptions<'doughnut'> = {
     responsive: true,
@@ -42,7 +43,33 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.loadStats();
+
+
+    // 👇 YENİ: Sayfa açılınca hafızayı kontrol et
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      this.isDarkMode = true;
+      this.applyTheme();
+    }
   }
+
+  // 👇 YENİ: Tema Değiştirme Fonksiyonu
+  toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode;
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+    this.applyTheme();
+  }
+
+  // 👇 YENİ: HTML'e dark modu uygula
+  private applyTheme(): void {
+    const htmlTag = document.documentElement;
+    if (this.isDarkMode) {
+      htmlTag.setAttribute('data-bs-theme', 'dark');
+    } else {
+      htmlTag.setAttribute('data-bs-theme', 'light');
+    }
+  }
+
 
   loadStats() {
     this.jobService.getJobStats().subscribe({

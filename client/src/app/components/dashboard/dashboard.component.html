@@ -1,8 +1,15 @@
-<div class="container-fluid dashboard-container">
-  
-  <div class="section-header">
-    <h2>🚀 Genel Bakış</h2>
-    <p class="subtitle">Kariyer yolculuğundaki son durumun</p>
+<div class="container page-container">  
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold text-dark">🚀 Genel Bakış</h2>
+      <p class="text-muted">Kariyer yolculuğundaki son durumun</p>
+    </div>
+
+    <button class="theme-btn" (click)="toggleTheme()" 
+            [title]="isDarkMode ? 'Aydınlık Mod' : 'Karanlık Mod'">
+      <i class="bi bi-sun-fill" *ngIf="isDarkMode" style="color: #ffc107;"></i>
+      <i class="bi bi-moon-stars-fill" *ngIf="!isDarkMode" style="color: #5e72e4;"></i>
+    </button>
   </div>
 
   <div class="stats-cards">

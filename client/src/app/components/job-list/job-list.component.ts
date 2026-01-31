@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , HostListener} from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms'; // Formlar için şart
 import { RouterModule } from '@angular/router';
 import { Job, JobService } from '../../services/job.service'; 
 import Swal from 'sweetalert2';
-
+import * as XLSX from 'xlsx';
 
 const Toast = Swal.mixin({
   toast: true,
@@ -44,6 +44,9 @@ export class JobListComponent implements OnInit {
   filterStatus: string = 'ALL';
   searchTerm: string = '';
   todayDate: string = new Date().toISOString().split('T')[0];
+  isExportOpen: boolean = false;
+  isDarkMode: boolean = false;
+
 
   // Tasarım için: Form açık mı kapalı mı?
   showForm: boolean = false; 
@@ -54,6 +57,30 @@ export class JobListComponent implements OnInit {
   
   ngOnInit(): void {
     this.loadJobs();
+
+    // 1. Sayfa açılınca hafızaya bak: Kullanıcı daha önce Dark Mode seçmiş mi?
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      this.isDarkMode = true;
+      this.applyTheme(); // Temayı uygula
+    }
+  }
+
+  // 2. Temayı Değiştiren Fonksiyon (Butona basınca çalışacak)
+  toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode;
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light'); // Hafızaya kaydet
+    this.applyTheme();
+  }
+
+  // 3. HTML'e "Koyu Mod" emrini veren yardımcı fonksiyon
+  private applyTheme(): void {
+    const htmlTag = document.documentElement;
+    if (this.isDarkMode) {
+      htmlTag.setAttribute('data-bs-theme', 'dark'); // Bootstrap'in sihirli kodu
+    } else {
+      htmlTag.setAttribute('data-bs-theme', 'light');
+    }
   }
 
   // İşleri Getir ve TARİHE GÖRE SIRALA
@@ -91,6 +118,17 @@ export class JobListComponent implements OnInit {
     }
 
     return result;
+  }
+// 1. Menüyü Aç/Kapa Yapan Fonksiyon
+  toggleExport(event: Event): void {
+    event.stopPropagation(); // Tıklama olayının yukarı sıçramasını engeller
+    this.isExportOpen = !this.isExportOpen;
+  }
+
+  // 2. Sayfanın Boş Bir Yerine Tıklayınca Menüyü Kapat
+  @HostListener('document:click', ['$event'])
+  closeMenu(event: Event): void {
+    this.isExportOpen = false;
   }
 
   // Formu Aç/Kapa
@@ -210,7 +248,7 @@ export class JobListComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.newJob = { company: '', position: '', platform: '', status: 'Başvuruldu', applicationDate: new Date() };
+    this.newJob = { company: '', position: '', platform: '', url: '', status: 'Başvuruldu', applicationDate: new Date() };
     this.isEditing = false;
     this.currentJobId = null;
   }
@@ -225,6 +263,93 @@ export class JobListComponent implements OnInit {
       case 'başvuruldu': return 'badge-primary';
       case 'beklemede': return 'badge-info';
       default: return 'badge-secondary';
+    }
+  }
+
+  // 1. KULLANICIYA SORAN FONKSİYON
+  confirmExport(): void {
+    Swal.fire({
+      title: 'Excel İndirilsin mi?',
+      text: 'Mevcut başvuru listeniz Excel formatında cihazınıza indirilecek.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#2dce89', // Yeşil tonu
+      cancelButtonColor: '#8898aa',
+      confirmButtonText: 'Evet, İndir',
+      cancelButtonText: 'Vazgeç'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.exportToExcel();
+      }
+    });
+  }
+
+  // 2. İŞLEMİ YAPAN GİZLİ FONKSİYON
+  private exportToExcel(): void {
+    const exportData = this.jobs.map(job => ({
+      'Şirket': job.company,
+      'Pozisyon': job.position,
+      'Platform': job.platform,
+      'Durum': job.status,
+      'Başvuru Tarihi': new Date(job.applicationDate).toLocaleDateString('tr-TR'),
+      'Link': job.url || 'Yok'
+    }));
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Basvurular');
+
+    // Dosya ismine tarih ekleyelim
+    const dateStr = new Date().toISOString().slice(0,10); // 2026-01-31 formatı
+    XLSX.writeFile(wb, `JobHunter_Listesi_${dateStr}.xlsx`);
+    
+    // Küçük bir başarı bildirimi (Sağ üstte)
+    Toast.fire({
+      icon: 'success',
+      title: 'Dosya indirildi'
+    });
+  }
+
+
+  // NOT EKLEME / DÜZENLEME PENCERESİ
+  async openNoteModal(job: Job): Promise<void> {
+    const { value: text } = await Swal.fire({
+      title: `${job.company} - Notlar`,
+      input: 'textarea', // Metin kutusu olsun
+      inputLabel: 'Mülakat detayları, maaş beklentisi vb.',
+      inputValue: job.note || '', // Varsa eski notu getir
+      inputPlaceholder: 'Buraya notlarınızı yazın...',
+      inputAttributes: {
+        'aria-label': 'Notlarınızı buraya yazın'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Kaydet',
+      cancelButtonText: 'Vazgeç',
+      confirmButtonColor: '#5e72e4', // Mavi
+      cancelButtonColor: '#f5365c'
+    });
+
+    // Eğer kullanıcı bir şey yazıp kaydettiyse (veya silip boş kaydettiyse)
+    if (text !== undefined && text !== job.note) {
+      // Veriyi güncelle
+      const updatedJob = { ...job, note: text };
+      
+      this.jobService.updateJob(job.id, updatedJob).subscribe({
+        next: () => {
+          job.note = text; // Tablodaki görüntüyü de güncelle
+          Toast.fire({
+            icon: 'success',
+            title: 'Not kaydedildi'
+          });
+        },
+        error: (err) => {
+          console.error(err);
+          Toast.fire({
+            icon: 'error',
+            title: 'Not kaydedilemedi'
+          });
+        }
+      });
     }
   }
 }

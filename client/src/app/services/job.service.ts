@@ -10,6 +10,8 @@ export interface Job {
   status: string;
   platform: string;
   applicationDate: Date;
+  url?:string;
+  note?: string;
 }
 
 export interface JobStats {

@@ -20,4 +20,10 @@ export class Job {
 
     @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     applicationDate: Date; //Otomatik bugünü atar
+
+    @Column({ nullable: true })
+    url: string;
+
+    @Column({ type: 'text', nullable: true }) // 'text' tipi uzun yazılar içindir
+    note: string;
 }

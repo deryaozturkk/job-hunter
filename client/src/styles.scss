@@ -9,3 +9,89 @@ html {
     background-color: #f8f9fe; // Tüm arka planı burada sabitleyelim
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
+  // ANİMASYON TANIMLAMASI
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0); // 20px aşağıdan başla
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0); // Yerine otur
+  }
+}
+
+// BU CLASSI VERDİĞİMİZ HER ŞEY UÇACAK
+.animate-fade-up {
+  animation: fadeInUp 0.6s ease-out forwards; // 0.6 saniyede gerçekleşsin
+}
+
+// Kartlara ve Tabloya otomatik uygulayalım
+app-dashboard .card, 
+app-job-list .table-card,
+app-job-list .page-header {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+
+
+/* --- GLOBAL DARK MODE AYARLARI --- */
+/* HTML etiketinde 'dark' varsa tüm sayfayı boya */
+[data-bs-theme="dark"] {
+
+  // Navbar'ın kendisi (Bootstrap sınıfı .navbar'dır genelde)
+  .navbar {
+    background-color: #262a43 !important; // Kartlarla aynı lacivert
+    border-bottom: 1px solid #2f3455;     // Altına ince çizgi
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  }
+
+  .navbar-brand, 
+  .navbar-brand span, 
+  .navbar-brand i,
+  .logo-text,          // Eğer özel class varsa
+  a.navbar-brand {     // Link halindeyse
+    color: #ffffff !important;
+    font-weight: 700 !important; // Biraz daha kalın olsun, okunsun
+  }
+  
+  // Menü Linkleri (Başvurular, Analiz)
+  .nav-link {
+    color: #aab8c5 !important; // Açık gri
+    
+    // Aktif olan link veya üzerine gelince
+    &.active, &:hover {
+      color: #5e72e4 !important; // Mavi parlasın
+    }
+  }
+  
+  // Sağ üstteki yuvarlak Profil/User butonu varsa (DO yazan)
+  .user-circle, .avatar, .btn-circle {
+      border: 1px solid #2f3455;
+  }
+
+  
+  body {
+    background-color: #1a1e35 !important; /* O koyu lacivert renk */
+    color: #e2e6ea; /* Genel yazı rengi açık gri */
+    transition: background-color 0.3s ease;
+  }
+
+  /* Eğer scrollbar (kaydırma çubuğu) varsa onu da koyulaştıralım */
+  ::-webkit-scrollbar-track {
+    background: #1a1e35; 
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2f3455; 
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5e72e4; 
+  }
+}
+
+/* Sayfa içeriği az olsa bile boydan boya renk olsun */
+html, body {
+  height: 100%;
+  margin: 0;
+}
