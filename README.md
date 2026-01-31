@@ -26,6 +26,7 @@ Bu proje, sektör standartlarında kabul gören modern mimari prensipleri ve gü
 * **Bootstrap 5** (Responsive Grid & Modern UI Bileşenleri)
 * **SweetAlert2** (Profesyonel Bildirim ve Onay Pencereleri)
 * **ng2-charts & Chart.js** (Veri Görselleştirme)
+* **jspdf & jspdf-autotable** (PDF Raporlama)
 * **RxJS** (Reaktif Programlama)
 * **SCSS** (Gelişmiş Stil Yönetimi ve Dark Mode Entegrasyonu)
 
@@ -39,7 +40,7 @@ Uygulama, kullanıcı deneyimini (UX) en üst düzeye çıkarmak için aşağıd
 - [x] **📋 Gelişmiş İş Takibi:** Şirket, pozisyon, platform ve tarih bilgileriyle başvuru ekleme, düzenleme ve silme.
 - [x] **📝 Not Sistemi:** Her başvuru için özel notlar ekleyebilme, okuma ve düzenleme imkanı.
 - [x] **🔍 Akıllı Arama & Filtreleme:** Şirket adına göre anlık arama ve başvuru durumuna göre listeleme.
-- [x] **📤 Excel Dışa Aktarım:** Başvuru listesini tek tıkla Excel (.xlsx) formatında indirebilme.
+- [x] **📤 Dışa Aktarım (Excel & PDF):** Başvuru listesini Excel (.xlsx) veya Türkçe karakter destekli PDF raporu olarak indirebilme.
 
 ### ✅ Arayüz ve Kullanıcı Deneyimi (UX/UI)
 - [x] **🌗 Karanlık Mod (Dark Mode):** Göz yormayan, sistem tercihiyle uyumlu ve hafızalı (localStorage) tema desteği.
@@ -49,7 +50,6 @@ Uygulama, kullanıcı deneyimini (UX) en üst düzeye çıkarmak için aşağıd
 - [x] **🔔 İnteraktif Geri Bildirimler:** Boş arama sonuçları için özel ekranlar ("Empty State"), Toast bildirimleri ve silme onayları.
 
 ### 🔜 Gelecek Planları (Roadmap)
-- [ ] **PDF Dışa Aktarım:** Başvuruların rapor halinde PDF olarak indirilmesi.
 - [ ] **AI Asistanı (Entegrasyon):** Google Gemini API kullanarak iş tanımına uygun CV tavsiyeleri alma.
 - [ ] **Kimlik Doğrulama (Auth):** JWT (JSON Web Token) ile güvenli giriş ve kullanıcı kaydı.
 

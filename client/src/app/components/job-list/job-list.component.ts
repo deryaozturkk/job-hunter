@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { Job, JobService } from '../../services/job.service'; 
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const Toast = Swal.mixin({
   toast: true,
@@ -352,4 +354,107 @@ export class JobListComponent implements OnInit {
       });
     }
   }
+
+  // ... importlar aynen kalsın ...
+
+  // 👇 1. YENİ: PDF ONAY FONKSİYONU
+  confirmPdfExport() {
+    Swal.fire({
+      title: 'PDF İndirilsin mi?',
+      text: "Mevcut başvuru listeniz PDF formatında cihazınıza indirilecek.",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#f5365c', // PDF Kırmızısı
+      cancelButtonColor: '#8898aa',
+      confirmButtonText: 'Evet, İndir',
+      cancelButtonText: 'Vazgeç'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.exportToPdf();
+      }
+    });
+  }
+
+  // 👇 2. GÜNCELLENMİŞ: PDF DIŞA AKTARMA
+  exportToPdf() {
+    const doc = new jsPDF();
+
+    // --- Tarih Formatı (31.01.2026) ---
+    const today = new Date().toLocaleDateString('tr-TR'); 
+
+    // --- Başlık ---
+    doc.setFontSize(18);
+    // Türkçe karakterleri temizleyerek yazdırıyoruz
+    doc.text(this.normalizeTurkish('Job Hunter - Basvuru Listesi'), 14, 20);
+
+    doc.setFontSize(10);
+    doc.text(`Tarih: ${today}`, 14, 28);
+
+    // --- Tablo Verisini Hazırla ---
+    const data = this.filteredJobs.map(job => [
+      this.normalizeTurkish(job.company),  // Google -> Google
+      this.normalizeTurkish(job.position), // Full Stack -> Full Stack
+      this.normalizeTurkish(job.platform), // Kariyer.net -> Kariyer.net
+      new Date(job.applicationDate).toLocaleDateString('tr-TR'), // 28.01.2026
+      this.normalizeTurkish(job.status),   // Başvuruldu -> Basvuruldu (Bozulmadan)
+      job.url ? 'Link Var' : '-' 
+    ]);
+
+    // --- Tabloyu Oluştur ---
+    autoTable(doc, {
+      head: [['Sirket', 'Pozisyon', 'Platform', 'Tarih', 'Durum', 'Link']],
+      body: data,
+      startY: 35,
+      theme: 'grid',
+      styles: {
+        fontSize: 9,
+        cellPadding: 3,
+      },
+      headStyles: {
+        fillColor: [94, 114, 228], // Job Hunter Mavisi
+        textColor: [255, 255, 255]
+      }
+    });
+
+    // --- Dosyayı Kaydet ---
+    doc.save(`JobHunter_Basvurular_${today}.pdf`);
+    
+    // --- Bildirim ---
+    this.isExportOpen = false;
+    
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+
+    Toast.fire({
+      icon: 'success',
+      title: 'PDF başarıyla indirildi!'
+    });
+  }
+
+  // 👇 3. YENİ: TÜRKÇE KARAKTER TEMİZLEYİCİ (Helper)
+  // Bu fonksiyon bozuk görünen karakterleri düzeltir (ş->s, ğ->g vb.)
+  normalizeTurkish(text: string): string {
+    if (!text) return '';
+    const map: { [key: string]: string } = {
+      'ç': 'c', 'Ç': 'C',
+      'ğ': 'g', 'Ğ': 'G',
+      'ı': 'i', 'I': 'I', // jsPDF 'I' harfini sever ama 'ı' sevmez
+      'İ': 'I', 'i': 'i',
+      'ö': 'o', 'Ö': 'O',
+      'ş': 's', 'Ş': 'S',
+      'ü': 'u', 'Ü': 'U'
+    };
+    return text.replace(/[çÇğĞıİöÖşŞüÜ]/g, (match) => map[match]);
+  }
+
+  
 }
