@@ -59,15 +59,17 @@ Uygulamanın hem gece hem gündüz kullanımına uygun modern arayüzü.
 
 | 🌑 **Dark Mode: Analiz (Dashboard)** | 🌑 **Dark Mode: Başvuru Listesi** |
 | :---: | :---: |
-| <img src="https://github.com/user-attachments/assets/94420182-1f7a-4598-8d5a-e24489c55b7e" width="100%" width="100%"> | <img src="https://github.com/user-attachments/assets/84d5cfe2-312d-4ccf-bc1b-ef5c89b1641e" width="100%"> |
+| <img src="https://github.com/user-attachments/assets/94420182-1f7a-4598-8d5a-e24489c55b7e" width="100%"> | <img src="https://github.com/user-attachments/assets/84d5cfe2-312d-4ccf-bc1b-ef5c89b1641e" width="100%"> |
 
 | ☀️ **Light Mode: Analiz (Dashboard)** | ☀️ **Light Mode: Başvuru Listesi** |
 | :---: | :---: |
 | <img src="https://github.com/user-attachments/assets/b6ed5543-7868-4027-a3f3-48e86dbfd9e5" width="100%"> | <img src="https://github.com/user-attachments/assets/08ddf0a7-5801-41eb-98d4-e772ed44bcd7" width="100%"> |
 
-| 📱 **Detay Görünüm** |
-| :---: |
-| <img src="https://github.com/user-attachments/assets/c97feee0-abe3-4415-994e-f13a240476e1"> |     
+| 📱 **Başvuru Ekleme Formu Detay** | 📱 **Mobil Liste** | 📱 **Mobil Başvuru Ekleme Formu** |
+| :---: | :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/c97feee0-abe3-4415-994e-f13a240476e1" width="100%"> | <img src="https://github.com/user-attachments/assets/4f9c360d-43ce-4ab6-8511-83326a936794" width="100%"> | <img src="https://github.com/user-attachments/assets/acaca394-6a5b-4e92-a25d-006ce56438ce" width="100%"> |
+
+
 
 
 ---
