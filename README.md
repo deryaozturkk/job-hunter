@@ -2,10 +2,11 @@
 
 ![Angular](https://img.shields.io/badge/Angular-v17-red?style=flat-square)
 ![NestJS](https://img.shields.io/badge/NestJS-v10-E0234E?style=flat-square)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-v5-purple?style=flat-square)
 
 **Job Hunter**, iş arama sürecindeki karmaşayı ortadan kaldırmak, başvuruları tek bir merkezden yönetmek ve süreci verilerle analiz etmek için geliştirilmiş modern bir **Full-Stack** web uygulamasıdır.
 
-Sıradan bir Excel tablosunun ötesinde; **Job Hunter** başvuruların durumunu (Mülakat, Red, Teklif) takip eder, **görsel grafiklerle** analiz sunar ve size **profesyonel bildirimlerle** geri bildirim verir.
+Sıradan bir Excel tablosunun ötesinde; **Job Hunter** başvuruların durumunu takip eder, **Dark Mode** desteği sunar, **görsel grafiklerle** analiz yapar ve size **profesyonel bildirimlerle** geri bildirim verir.
 
 ---
 
@@ -17,16 +18,16 @@ Bu proje, sektör standartlarında kabul gören modern mimari prensipleri ve gü
 * **NestJS** (Node.js Framework - Modüler Mimari)
 * **TypeScript** (Tip Güvenliği / Type-Safety)
 * **PostgreSQL** (İlişkisel Veritabanı)
-* **TypeORM** (ORM & Veritabanı Yönetimi - QueryBuilder)
+* **TypeORM** (ORM & Veritabanı Yönetimi)
 * **RESTful API** (CRUD İşlemleri)
 
 ### **Frontend (İstemci Tarafı)**
 * **Angular 17+** (Standalone Components & Modern Mimari)
 * **Bootstrap 5** (Responsive Grid & Modern UI Bileşenleri)
 * **SweetAlert2** (Profesyonel Bildirim ve Onay Pencereleri)
-* **ng2-charts & Chart.js** (Doughnut Chart ile Veri Görselleştirme)
+* **ng2-charts & Chart.js** (Veri Görselleştirme)
 * **RxJS** (Reaktif Programlama)
-* **SCSS** (Gelişmiş Stil Yönetimi)
+* **SCSS** (Gelişmiş Stil Yönetimi ve Dark Mode Entegrasyonu)
 
 ---
 
@@ -36,26 +37,39 @@ Uygulama, kullanıcı deneyimini (UX) en üst düzeye çıkarmak için aşağıd
 
 ### ✅ Temel Özellikler
 - [x] **📋 Gelişmiş İş Takibi:** Şirket, pozisyon, platform ve tarih bilgileriyle başvuru ekleme, düzenleme ve silme.
-- [x] **🔍 Akıllı Arama Motoru:** Şirket adı, pozisyon veya platforma göre anlık (real-time) arama yapabilme.
-- [x] **🏷️ Renkli Durum Yönetimi:** Başvuruların durumuna göre (Mülakat=Turuncu, Red=Kırmızı, Teklif=Yeşil) otomatik renklenen "Badge" sistemi.
-- [x] **🛡️ Validasyon Kontrolleri:** Eksik veri girişini engelleme ve ileri tarihli kayıt koruması.
+- [x] **📝 Not Sistemi:** Her başvuru için özel notlar ekleyebilme, okuma ve düzenleme imkanı.
+- [x] **🔍 Akıllı Arama & Filtreleme:** Şirket adına göre anlık arama ve başvuru durumuna göre listeleme.
+- [x] **📤 Excel Dışa Aktarım:** Başvuru listesini tek tıkla Excel (.xlsx) formatında indirebilme.
 
-### ✅ Analiz ve Görsellik
-- [x] **📈 Analitik Dashboard:** Başvuru dağılımlarını gösteren modern "Doughnut" grafik ve özet bilgi kartları.
-- [x] **🔔 Profesyonel Bildirimler:** İşlem başarı/hata durumlarında sağ üstten çıkan modern "Toast" bildirimleri ve silme işlemi için "Emin misin?" onay penceresi.
-- [x] **📱 Tam Responsive:** Mobil, tablet ve masaüstü uyumlu esnek tasarım.
+### ✅ Arayüz ve Kullanıcı Deneyimi (UX/UI)
+- [x] **🌗 Karanlık Mod (Dark Mode):** Göz yormayan, sistem tercihiyle uyumlu ve hafızalı (localStorage) tema desteği.
+- [x] **📱 Tam Mobil Uyumluluk:** Hamburger menü, yatay kaydırılabilir tablolar (scrollable tables) ve responsive kart tasarımı.
+- [x] **📈 Analitik Dashboard:** Başvuru dağılımlarını gösteren modern grafikler ve özet bilgi kartları.
+- [x] **✨ Modern Navigasyon:** "Pill" (Hap) tasarımlı, aktif sekmeyi vurgulayan şık menü yapısı.
+- [x] **🔔 İnteraktif Geri Bildirimler:** Boş arama sonuçları için özel ekranlar ("Empty State"), Toast bildirimleri ve silme onayları.
 
 ### 🔜 Gelecek Planları (Roadmap)
-- [ ] **Detay Sayfaları:** Her başvuru için mülakat notları, tarihçe ve link saklama alanı.
+- [ ] **PDF Dışa Aktarım:** Başvuruların rapor halinde PDF olarak indirilmesi.
 - [ ] **AI Asistanı (Entegrasyon):** Google Gemini API kullanarak iş tanımına uygun CV tavsiyeleri alma.
 - [ ] **Kimlik Doğrulama (Auth):** JWT (JSON Web Token) ile güvenli giriş ve kullanıcı kaydı.
-- [ ] **Karanlık Mod (Dark Mode):** Kullanıcı tercihine göre tema değişimi.
 
 ## 📸 Ekran Görüntüleri
 
-| 📋 Başvuru Listesi | 📊 Dashboard Analizi |
+Uygulamanın hem gece hem gündüz kullanımına uygun modern arayüzü.
+
+| 🌑 **Dark Mode: Analiz (Dashboard)** | 🌑 **Dark Mode: Başvuru Listesi** |
 | :---: | :---: |
-| ![Dashboard](https://github.com/user-attachments/assets/916583c5-27b4-439d-babe-5c29a919dabf) | ![Liste](https://github.com/user-attachments/assets/ba32a994-a4e8-4a0a-955a-bd0cb0c7a1bd) |
+| <img src="https://github.com/user-attachments/assets/94420182-1f7a-4598-8d5a-e24489c55b7e" width="100%" width="100%"> | <img src="https://github.com/user-attachments/assets/84d5cfe2-312d-4ccf-bc1b-ef5c89b1641e" width="100%"> |
+
+| ☀️ **Light Mode: Analiz (Dashboard)** | ☀️ **Light Mode: Başvuru Listesi** |
+| :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/b6ed5543-7868-4027-a3f3-48e86dbfd9e5" width="100%"> | <img src="https://github.com/user-attachments/assets/08ddf0a7-5801-41eb-98d4-e772ed44bcd7" width="100%"> |
+
+| 📱 **Detay Görünüm** |
+| :---: |
+| <img src="https://github.com/user-attachments/assets/c97feee0-abe3-4415-994e-f13a240476e1"> |     
+
+
 ---
 
 ## 🛠️ Kurulum ve Çalıştırma Rehberi
