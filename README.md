@@ -2,75 +2,90 @@
 
 ![Angular](https://img.shields.io/badge/Angular-v17-red?style=flat-square)
 ![NestJS](https://img.shields.io/badge/NestJS-v10-E0234E?style=flat-square)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v15-blue?style=flat-square)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-v5-purple?style=flat-square)
 
 **Job Hunter**, iş arama sürecindeki karmaşayı ortadan kaldırmak, başvuruları tek bir merkezden yönetmek ve süreci verilerle analiz etmek için geliştirilmiş modern bir **Full-Stack** web uygulamasıdır.
 
-Sıradan bir Excel tablosunun ötesinde; **Job Hunter** başvuruların durumunu takip eder, **Dark Mode** desteği sunar, **görsel grafiklerle** analiz yapar ve size **profesyonel bildirimlerle** geri bildirim verir.
+Sıradan bir Excel tablosunun ötesinde; **Job Hunter** başvuruların durumunu takip eder, **Karanlık Mod** desteği sunar, görsel grafiklerle analiz yapar ve güvenli bir altyapı ile verilerinizi korur.
 
 ---
 
-## 🚀 Kullanılan Teknolojiler
+## 🚀 Teknik Geliştirmeler ve Mimari
 
-Bu proje, sektör standartlarında kabul gören modern mimari prensipleri ve güncel teknolojiler kullanılarak geliştirilmiştir.
+Bu proje; güvenlik, performans ve UI/UX odaklı mühendislik çözümleri sunan bir platformdur.
 
-### **Backend (Sunucu Tarafı)**
-* **NestJS** (Node.js Framework - Modüler Mimari)
-* **TypeScript** (Tip Güvenliği / Type-Safety)
-* **PostgreSQL** (İlişkisel Veritabanı)
-* **TypeORM** (ORM & Veritabanı Yönetimi)
-* **RESTful API** (CRUD İşlemleri)
+### ***1. Güvenlik ve Kimlik Doğrulama***
+* **JWT (JSON Web Token):** Kullanıcı oturumları, sektör standardı olan JWT stratejisi ile uçtan uca güvenli hale getirilmiştir.
+* **Bcrypt Şifreleme:** Kullanıcı şifreleri veritabanında ham metin olarak değil, `bcrypt` algoritması ile karma (hash) yöntemiyle saklanır.
+* **Auth Guards & Interceptors:** Angular tarafında yetkisiz erişimleri engelleyen Guard yapısı ve her isteğe token ekleyen Interceptor mimarisi kurulmuştur.
 
-### **Frontend (İstemci Tarafı)**
-* **Angular 17+** (Standalone Components & Modern Mimari)
-* **Bootstrap 5** (Responsive Grid & Modern UI Bileşenleri)
-* **SweetAlert2** (Profesyonel Bildirim ve Onay Pencereleri)
-* **ng2-charts & Chart.js** (Veri Görselleştirme)
-* **jspdf & jspdf-autotable** (PDF Raporlama)
-* **RxJS** (Reaktif Programlama)
-* **SCSS** (Gelişmiş Stil Yönetimi ve Dark Mode Entegrasyonu)
+### ***2. Gelişmiş SCSS ve Tema Yönetimi***
+* **Kontrast Optimizasyonu:** Karanlık modda (Dark Mode) tüm bileşenlerin mükemmel okunabilirliğe sahip olması için SCSS bazlı özel görsel iyileştirmeler yapılmıştır.
+* **Dinamik CSS Yapısı:** Dashboard kartları ve grafik alanları, reaktif CSS kuralları ile tema değişimine tam uyumlu hale getirilmiştir.
+
+---
+
+## 🛠 Kullanılan Teknolojiler
+
+### ***Backend (Sunucu Tarafı)***
+* **NestJS:** Modüler ve ölçeklenebilir mimari üzerine kurulu sunucu yapısı.
+* **TypeScript:** Gelişmiş statik tip güvenliği.
+* **PostgreSQL:** Güçlü ve güvenilir ilişkisel veritabanı.
+* **TypeORM:** Nesne tabanlı veritabanı yönetimi (ORM).
+* **Passport.js & JWT:** Güvenli kimlik doğrulama ve yetkilendirme.
+
+### ***Frontend (İstemci Tarafı)***
+* **Angular 17+:** Standalone bileşenler ve modern reaktif mimari.
+* **RxJS:** Asenkron veri akışı ve uygulama durumu yönetimi.
+* **SCSS:** Gelişmiş stil yönetimi ve akıllı tema entegrasyonu.
+* **ng2-charts & Chart.js:** Dinamik veri görselleştirme ve istatistiksel grafikler.
 
 ---
 
 ## 📊 Proje Özellikleri
 
-Uygulama, kullanıcı deneyimini (UX) en üst düzeye çıkarmak için aşağıdaki özelliklerle donatılmıştır:
+### ***✅ Tamamlanan Özellikler***
 
-### ✅ Temel Özellikler
-- [x] **📋 Gelişmiş İş Takibi:** Şirket, pozisyon, platform ve tarih bilgileriyle başvuru ekleme, düzenleme ve silme.
-- [x] **📝 Not Sistemi:** Her başvuru için özel notlar ekleyebilme, okuma ve düzenleme imkanı.
-- [x] **🔍 Akıllı Arama & Filtreleme:** Şirket adına göre anlık arama ve başvuru durumuna göre listeleme.
-- [x] **📤 Dışa Aktarım (Excel & PDF):** Başvuru listesini Excel (.xlsx) veya Türkçe karakter destekli PDF raporu olarak indirebilme.
+#### ***🔐 Kimlik Doğrulama ve Güvenlik (Auth System)***
+* **JWT Tabanlı Güvenlik:** Tüm API uç noktaları JSON Web Token ile korunur; yetkisiz erişimler sunucu seviyesinde engellenir.
+* **Gelişmiş Giriş ve Kayıt:** Kullanıcılar için özel hazırlanmış Login ve Register sayfaları üzerinden güvenli oturum yönetimi sağlanır.
+* **Kişisel Profil Sayfası:** Kullanıcıların kendi hesap bilgilerini görüntüleyebildiği ve yönetebildiği özel Profil sekmesi mevcuttur.
+* **Route Protection:** Angular AuthGuard yapısı ile giriş yapmamış kullanıcıların uygulama içindeki sayfalara erişimi engellenir.
 
-### ✅ Arayüz ve Kullanıcı Deneyimi (UX/UI)
-- [x] **🌗 Karanlık Mod (Dark Mode):** Göz yormayan, sistem tercihiyle uyumlu ve hafızalı (localStorage) tema desteği.
-- [x] **📱 Tam Mobil Uyumluluk:** Hamburger menü, yatay kaydırılabilir tablolar (scrollable tables) ve responsive kart tasarımı.
-- [x] **📈 Analitik Dashboard:** Başvuru dağılımlarını gösteren modern grafikler ve özet bilgi kartları.
-- [x] **✨ Modern Navigasyon:** "Pill" (Hap) tasarımlı, aktif sekmeyi vurgulayan şık menü yapısı.
-- [x] **🔔 İnteraktif Geri Bildirimler:** Boş arama sonuçları için özel ekranlar ("Empty State"), Toast bildirimleri ve silme onayları.
+#### ***📋 İş Başvuru ve Veri Yönetimi***
+* **Merkezi İş Takibi:** Şirket, pozisyon, platform ve başvuru tarihi gibi detaylar özel notlarla birlikte kayıt altına alınabilir.
+* **Akıllı Arama & Filtreleme:** Binlerce başvuru arasında anlık arama yapabilir ve başvuru durumuna göre listeleme yapabilirsiniz.
+* **📤 Profesyonel Dışa Aktarım:** Verilerinizi tek tıkla Excel (.xlsx) veya Türkçe karakter destekli PDF formatına dönüştürerek raporlayabilirsiniz.
 
-### 🔜 Gelecek Planları (Roadmap)
-- [ ] **AI Asistanı (Entegrasyon):** Google Gemini API kullanarak iş tanımına uygun CV tavsiyeleri alma.
-- [ ] **Kimlik Doğrulama (Auth):** JWT (JSON Web Token) ile güvenli giriş ve kullanıcı kaydı.
+#### ***📈 Analitik ve Görsel Arayüz (UI/UX)***
+* **Dinamik Dashboard:** Başvurularınızın güncel durum dağılımını Chart.js destekli grafiklerle anlık olarak takip edebilirsiniz.
+* **🌗 Karanlık Mod (Dark Mode):** Sistem tercihinize uyumlu, göz yormayan ve localStorage sayesinde seçiminizi hatırlayan akıllı tema desteği.
+* **İnteraktif Bildirimler:** SweetAlert2 ile zenginleştirilmiş, profesyonel bildirim mesajları ve onay pencereleri.
 
+### ***🔜 Gelecek Planları (Roadmap)***
+* **AI Asistan Entegrasyonu:** Google Gemini API kullanarak iş tanımına göre otomatik CV ve ön yazı tavsiyeleri oluşturma.
+
+---
 ## 📸 Ekran Görüntüleri
 
 Uygulamanın hem gece hem gündüz kullanımına uygun modern arayüzü.
 
 | 🌑 **Dark Mode: Analiz (Dashboard)** | 🌑 **Dark Mode: Başvuru Listesi** |
 | :---: | :---: |
-| <img src="https://github.com/user-attachments/assets/94420182-1f7a-4598-8d5a-e24489c55b7e" width="100%"> | <img src="https://github.com/user-attachments/assets/84d5cfe2-312d-4ccf-bc1b-ef5c89b1641e" width="100%"> |
+| <img src="https://github.com/user-attachments/assets/a7d6ce2e-910e-4ac3-a4d2-9c673a1f5a0c" width="100%" /> | <img src="https://github.com/user-attachments/assets/9eb7122b-9899-44b7-b38a-53443f68b0f8" width="100%" /> |
 
 | ☀️ **Light Mode: Analiz (Dashboard)** | ☀️ **Light Mode: Başvuru Listesi** |
 | :---: | :---: |
-| <img src="https://github.com/user-attachments/assets/b6ed5543-7868-4027-a3f3-48e86dbfd9e5" width="100%"> | <img src="https://github.com/user-attachments/assets/08ddf0a7-5801-41eb-98d4-e772ed44bcd7" width="100%"> |
+| <img src="https://github.com/user-attachments/assets/fd0936c6-2c00-4c0b-a2d2-ab49da75bee5" width="100%"> | <img src="https://github.com/user-attachments/assets/2647e83b-24cb-4c73-9ee8-04cf31f9a337" width="100%"> |
 
-| 📱 **Başvuru Ekleme Formu Detay** | 📱 **Mobil Liste** | 📱 **Mobil Başvuru Ekleme Formu** |
+| 📱 **Başvuru Ekleme Formu Detay** | 📱 **Mobil Analiz Ekranı** | 📱 **Mobil Analiz Ekranı** |
 | :---: | :---: | :---: |
-| <img src="https://github.com/user-attachments/assets/c97feee0-abe3-4415-994e-f13a240476e1" width="100%"> | <img src="https://github.com/user-attachments/assets/4f9c360d-43ce-4ab6-8511-83326a936794" width="100%"> | <img src="https://github.com/user-attachments/assets/acaca394-6a5b-4e92-a25d-006ce56438ce" width="100%"> |
+| <img src="https://github.com/user-attachments/assets/4472fee3-e8b5-4218-9ce4-a6d908dd9ae2" width="100%" /> | <img src="https://github.com/user-attachments/assets/ee52daad-80a5-4163-aac4-ce4bcde26127" width="100%"/> | <img src="https://github.com/user-attachments/assets/5495c899-168a-4e32-b86e-d0abd790f86e" width="100%"/> |
 
-
-
+| 📱 **Mobil: Giriş Sayfası** | 📱 **Mobil: Profil Sayfası** | 📱 **Mobil: Profil Güncelleme** |
+| :---: | :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/04924509-5b0a-40db-80f8-ef22a8ae7786" width="100%"/> | <img src="https://github.com/user-attachments/assets/e8b95a1e-5543-4c4d-b0a8-22f30f010ade" width="100%"/> | <img src="https://github.com/user-attachments/assets/69a38a50-fe95-4749-a843-5dae02ecd062" width="100%"/> |
 
 ---
 
