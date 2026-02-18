@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    
+    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/jobs">
+      <span class="icon" style="font-size: 1.5rem;">🏹</span>
+      <span class="text fw-bold" style="font-size: 1.2rem;">Job Hunter</span>
+    </a>
+
+    <button *ngIf="authService.isLoggedIn()" 
+            class="navbar-toggler border-0 shadow-none" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div *ngIf="authService.isLoggedIn()" class="collapse navbar-collapse" id="navbarContent">
+      <div class="navbar-right-side ms-auto d-flex flex-column flex-lg-row align-items-center gap-3 mt-3 mt-lg-0">
+        
+        <div class="nav-pills-container">
+          <a class="nav-link" 
+             routerLink="/jobs" 
+             routerLinkActive="active" 
+             [routerLinkActiveOptions]="{exact: true}">
+            Başvurular
+          </a>
+
+          <a class="nav-link" 
+             routerLink="/dashboard" 
+             routerLinkActive="active">
+            Analiz
+          </a>
+        </div>
+
+        <div class="vertical-divider d-none d-lg-block"></div>
+
+        <div class="avatar-circle" routerLink="/profile" routerLinkActive="active">
+            {{ authService.getUserInitials() }}
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</nav>

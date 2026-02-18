@@ -1,0 +1,171 @@
+.profile-container {
+    min-height: 80vh; /* Sayfayı ortalasın */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  
+    .profile-card {
+      background: rgba(30, 30, 47, 0.7); /* Şeffaf koyu zemin */
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 3rem;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      color: white;
+    }
+  
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  
+      .avatar-circle {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #ff9966, #ff5e62);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 15px rgba(255, 94, 98, 0.4);
+      }
+  
+      h2 { margin: 0; font-size: 1.8rem; }
+      .subtitle { color: #aab8c5; margin-top: 0.5rem; }
+    }
+  
+    .divider {
+      border-color: rgba(255, 255, 255, 0.1);
+      margin: 2rem 0;
+    }
+  
+    .info-grid {
+      display: grid;
+      gap: 1.5rem;
+  
+      .info-item {
+        label {
+          color: #ff9966; /* Turuncu başlıklar */
+          font-size: 0.9rem;
+          font-weight: 600;
+          margin-bottom: 0.3rem;
+          display: block;
+        }
+        p { margin: 0; font-size: 1.1rem; }
+        small { color: #8899a6; font-size: 0.9rem; }
+      }
+    }
+  
+    .badges {
+      display: flex;
+      gap: 10px;
+      .badge.score {
+        background: rgba(94, 114, 228, 0.2);
+        color: #5e72e4;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+      }
+    }
+  
+
+  }
+
+  .btn-logout {
+    background: rgba(239, 83, 80, 0.1); /* Hafif kırmızı zemin */
+    color: #ef5350; /* Kırmızı yazı */
+    border: 1px solid #ef5350;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  
+    &:hover {
+      background: #ef5350;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(239, 83, 80, 0.4);
+    }
+  }
+
+.btn-edit {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #aab8c5;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    background: white;
+    color: #333;
+  }
+}
+
+/* Düzenleme Formu Stilleri */
+.edit-form {
+  .form-group {
+    margin-bottom: 1.5rem;
+    
+    label {
+      display: block;
+      color: #aab8c5;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.2);
+      color: white;
+      font-size: 1rem;
+
+      &:focus {
+        outline: none;
+        border-color: #ff9966;
+        box-shadow: 0 0 10px rgba(255, 153, 102, 0.2);
+      }
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 2rem;
+
+    button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+
+      &:hover { transform: translateY(-2px); }
+    }
+
+    .btn-cancel {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .btn-save {
+      background: linear-gradient(135deg, #2dce89, #2dcecc);
+      color: white;
+    }
+  }
+}

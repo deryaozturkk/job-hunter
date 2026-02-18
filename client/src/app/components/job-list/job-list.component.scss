@@ -1,0 +1,498 @@
+// --- RENK PALETİ ---
+$primary: #5e72e4;
+$success: #2dce89;
+$danger: #f5365c;
+$warning: #fb6340;
+$gray: #8898aa;
+$light-bg: #f6f9fc;
+
+.page-container {
+  padding-top: 30px;
+  padding-bottom: 50px;
+  min-height: 100vh; // Sayfa kısa olsa bile dark mode tüm ekranı kaplasın
+  transition: background-color 0.3s ease;
+}
+
+// --- ÜST KISIM (HEADER) ---
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  
+  //  DROPDOWN SORUNUNU ÇÖZEN AYARLAR
+  position: relative; 
+  z-index: 50; 
+
+  .header-left {
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #32325d;
+      margin-bottom: 5px;
+    }
+    p { color: $gray; margin: 0; font-size: 0.9rem; }
+  }
+
+  // Buton Grubu
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+  }
+}
+
+// --- BUTONLAR ---
+
+// 1. Yeni Ekle Butonu
+.btn-add {
+  background: linear-gradient(87deg, $primary 0, #825ee4 100%);
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 30px;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11);
+  transition: all 0.3s;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1);
+  }
+}
+
+// 2. Dışa Aktar (Export) Butonu
+.export-btn {
+  background: white;
+  color: #525f7f;
+  border: 1px solid #e9ecef;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  white-space: nowrap;
+
+  .icon { font-size: 1.1rem; }
+
+  &:hover {
+    background: #f6f9fc;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1);
+    color: #32325d;
+  }
+}
+
+// 3. Tema Değiştirme (Dark Mode) Butonu
+.theme-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #e9ecef;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  color: #5e72e4;
+
+  &:hover {
+    transform: rotate(15deg);
+    background: #f6f9fc;
+  }
+  i { font-size: 1.2rem; }
+}
+
+// --- AÇILIR MENÜ (DROPDOWN) ---
+.dropdown-menu {
+  margin-top: 10px !important;
+  animation: slideDownFade 0.2s ease-out;
+  border: none;
+  
+  //  Z-INDEX ÇAKIŞMASINI ÖNLEMEK İÇİN
+  position: absolute !important; 
+  z-index: 1050 !important;      
+  min-width: 200px;
+  
+  .dropdown-item {
+    transition: all 0.2s;
+    cursor: pointer;
+    &:hover {
+      background-color: #f6f9fc;
+      transform: translateX(5px);
+    }
+  }
+}
+
+// --- FORM KARTI ---
+.form-card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.05);
+  animation: slideDown 0.4s ease-out;
+  margin-bottom: 30px;
+
+  .form-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #32325d;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #525f7f;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    padding: 12px 15px;
+    transition: all 0.2s;
+    
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba(94, 114, 228, 0.1);
+      outline: none;
+    }
+  }
+  
+  .input-group {
+    .input-group-text {
+      background-color: $light-bg;
+      border: 1px solid #dee2e6;
+      border-right: none;
+    }
+    .form-control {
+      border-left: none;
+      &:focus { border-color: #dee2e6; box-shadow: none; }
+    }
+    &:focus-within {
+       box-shadow: 0 0 0 3px rgba(94, 114, 228, 0.1);
+       border-radius: 8px;
+    }
+  }
+}
+
+// --- TABLO KARTI VE ARAMA ---
+.table-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1);
+  padding: 20px;
+  border: 1px solid rgba(0,0,0,0.05);
+  // Tablo animasyonlu gelsin
+  animation: fadeInUp 0.6s ease-out forwards; 
+  overflow-x: auto;
+}
+
+.search-bar {
+  background: $light-bg;
+  padding: 12px 20px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 350px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+
+  &:focus-within {
+    background: white;
+    border-color: $primary;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1);
+  }
+
+  input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    color: #32325d;
+    font-weight: 500;
+    &::placeholder { color: #adb5bd; }
+  }
+  i, .search-icon { color: #adb5bd; font-size: 1.1rem;}
+}
+
+// --- TABLO DETAYLARI ---
+.custom-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0; 
+
+  thead th {
+    background: $light-bg;
+    color: $gray;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    padding: 15px;
+    font-weight: 700;
+    &:first-child { border-radius: 8px 0 0 8px; }
+    &:last-child { border-radius: 0 8px 8px 0; }
+  }
+
+  tbody td {
+    vertical-align: middle;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 15px;
+    color: #525f7f;
+    font-size: 0.9rem;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  // Şirket Logosu
+  .logo-placeholder {
+    width: 40px;
+    height: 40px;
+    background: lighten($primary, 35%);
+    color: $primary;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-right: 15px;
+  }
+  .company-info { display: flex; align-items: center; }
+}
+
+// Platform Etiketi
+.platform-tag {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  color: #525f7f;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+// İlan Linki Butonu
+.url-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; 
+  height: 32px;
+  background-color: #f0f2f5; 
+  color: $primary;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0,0,0,0.05);
+  margin-left: 8px;
+
+  i { font-size: 1rem; line-height: 0; }
+
+  &:hover {
+    background-color: $primary;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(94, 114, 228, 0.3);
+  }
+}
+
+// Durum Rozetleri
+.badge {
+  padding: 8px 12px;
+  border-radius: 30px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  &.badge-warning { background: lighten($warning, 35%); color: $warning; }
+  &.badge-danger { background: lighten($danger, 35%); color: $danger; }
+  &.badge-success { background: lighten($success, 35%); color: $success; }
+  &.badge-primary { background: lighten($primary, 35%); color: $primary; }
+  &.badge-secondary { background: #e9ecef; color: $gray; }
+}
+
+// İşlem Butonları (Düzenle, Not, Sil)
+.action-buttons {
+  .btn-icon {
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 5px;
+    transition: transform 0.2s;
+    opacity: 0.6;
+    border-radius: 50%;
+
+    &:hover { opacity: 1; transform: scale(1.1); background: #f6f9fc;}
+  }
+}
+
+// Form Kaydet Butonları
+.btn-primary {
+  background-color: $primary;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 8px;
+  font-weight: 600;
+  &:hover { background-color: darken($primary, 5%); }
+}
+
+.btn-secondary {
+  background: #f6f9fc;
+  color: $gray;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  &:hover { background: #e9ecef; color: #32325d; }
+}
+
+// --- ANİMASYONLAR ---
+@keyframes slideDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideDownFade { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translate3d(0, 20px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+
+
+// 🌙 DARK MODE (KOYU MOD) AYARLARI - GÜNCELLENMİŞ
+:host-context([data-bs-theme="dark"]) {  
+  .page-container {
+    background-color: #1a1e35;
+  }
+
+  .page-header h2 { color: #f6f9fc; }
+
+  // Kartlar
+  .table-card, .form-card {
+    background-color: #262a43;
+    border-color: #2f3455;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+    .form-title { color: #fff; border-bottom-color: #2f3455; }
+    
+    // Etiketler (Label)
+    label { color: #e2e6ea; } // Daha parlak bir beyaz/gri
+
+    //  KRİTİK DÜZELTME: Yardımcı Yazılar (URL altındaki)
+    small.text-muted {
+        color: #868170 !important; 
+    }
+  }
+
+  // Inputlar ve Selectler
+  .form-control, .form-select, .search-bar {
+    background-color: #1a1e35;
+    border-color: #2f3455;
+    color: #fff;
+
+    &:focus {
+      background-color: #1a1e35;
+      color: #fff;
+      border-color: #5e72e4;
+    }
+    
+    // Placeholder (Örnek yazılar) rengini açalım
+    &::placeholder { color: #8898aa; } 
+  }
+  
+  // Arama İkonu
+  .search-bar i, .search-bar .search-icon {
+      color: #8898aa;
+  }
+  
+  .input-group-text {
+    background-color: #2f3455;
+    border-color: #2f3455;
+    color: #e2e6ea; // İkon rengi
+  }
+
+  // Tablo
+  .custom-table {
+    thead th {
+      background-color: #1a1e35;
+      color: #ced4da; // Başlıkları biraz daha parlattık
+      font-weight: 700;
+    }
+    tbody td {
+      border-bottom-color: #2f3455;
+      color: #e2e6ea;
+    }
+    
+    // Şirket isimlerini tam beyaz yapalım, öne çıksın
+    .company-name { color: #ffffff; font-weight: 600; }
+
+    .logo-placeholder {
+      background-color: #2f3455;
+    }
+  }
+
+  // Butonlar
+  .export-btn {
+    background-color: #262a43;
+    border-color: #2f3455;
+    color: #fff;
+    &:hover { background-color: #2f3455; }
+  }
+
+  .theme-btn {
+    background: #262a43;
+    border-color: #2f3455;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .dropdown-menu {
+    background-color: #262a43;
+    border: 1px solid #2f3455;
+    
+    .dropdown-item {
+      color: #e2e6ea;
+      &:hover { background-color: #2f3455; }
+      
+      // Disabled olan PDF butonu için
+      &.disabled {
+          i { color: #4a5073 !important; }
+          span { color: #6c757d !important; }
+      }
+    }
+  }
+
+  .platform-tag {
+    background-color: #2f3455;
+    color: #fff;
+    border-color: #3f4465;
+  }
+
+  .url-link-btn {
+    background-color: #2f3455;
+    border-color: transparent;
+    i { color: #fff; }
+    &:hover { background-color: #5e72e4; }
+  }
+  
+  .action-buttons .btn-icon {
+      color: #e2e6ea; // İkonları parlatalım
+      &:hover { background-color: #2f3455; }
+  }
+}

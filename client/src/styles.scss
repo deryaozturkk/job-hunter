@@ -1,0 +1,75 @@
+/* styles.scss - GÜNCEL HALİ */
+
+/* Sayfa zıplamasını engellemek için */
+html {
+  overflow-y: scroll;
+}
+
+body {
+  margin: 0;
+  /* Varsayılan olarak KOYU renk yaptık */
+  background-color: #1a1e35; 
+  color: white; /* Yazılar da varsayılan beyaz olsun */
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+/* Sayfa içeriği az olsa bile boydan boya renk olsun */
+html, body {
+  height: 100%;
+}
+
+/* --- ANİMASYONLAR --- */
+@keyframes fadeInUp {
+from { opacity: 0; transform: translate3d(0, 20px, 0); }
+to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.animate-fade-up {
+animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Kartlara ve Tabloya otomatik uygulayalım */
+app-dashboard .card, 
+app-job-list .table-card,
+app-job-list .page-header {
+animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* --- GLOBAL DARK SCROLLBAR (Her zaman şık dursun) --- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1e35; 
+}
+::-webkit-scrollbar-thumb {
+  background: #2f3455; 
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5e72e4; 
+}
+
+/* Navbar Ayarları (Global) */
+.navbar {
+  background-color: transparent !important; /* Arkaplanla bütünleşsin */
+}
+
+/* --- GLOBAL TEXT COLORS (ZORUNLU BEYAZ) --- */
+
+/* Tüm başlık etiketleri (h1-h6) ve class'ları */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: #ffffff !important; /* Kesinlikle beyaz olsun */
+}
+
+/* "Sonuç Bulunamadı" gibi alt metinler genelde 'text-muted' olur */
+.text-muted {
+  color: #aab8c5 !important; /* Açık gri (okunabilir) yapalım */
+}
+
+/* Genel yazı rengi */
+body {
+  color: #e2e6ea; 
+}

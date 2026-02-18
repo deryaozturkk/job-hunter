@@ -1,0 +1,160 @@
+// --- NAVBAR GENEL ---
+.navbar {
+  background-color: transparent; 
+  padding: 15px 0;
+  z-index: 1000;
+  // container kullandığımız için padding-left/right sildik, Bootstrap halledecek
+}
+
+// --- LOGO ---
+.navbar-brand {
+  color: #32325d;
+  transition: color 0.3s;
+  &:hover { color: #5e72e4; }
+}
+
+// --- KAPSÜL KONTEYNER (Sekmelerin olduğu beyaz kutu) ---
+.nav-pills-container {
+  background-color: #ffffff; // Beyaz zemin
+  border-radius: 50px;       // Yuvarlak köşeler
+  padding: 4px;              // İç boşluk (Kenarlardan mesafe)
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  gap: 2px;
+}
+
+// --- LİNKLER (Pills) ---
+.nav-link {
+  color: #8898aa; // Pasif yazı rengi (Gri)
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 8px 25px !important;
+  border-radius: 30px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  white-space: nowrap;
+
+  &:hover {
+    color: #5e72e4;
+    background-color: rgba(94, 114, 228, 0.05);
+  }
+
+  // AKTİF DURUM
+  &.active {
+    background-color: #5e72e4 !important; // Mavi Buton
+    color: #ffffff !important; // Beyaz Yazı
+    box-shadow: 0 2px 5px rgba(94, 114, 228, 0.3);
+  }
+}
+
+// --- DİKEY AYIRAÇ ÇİZGİ ---
+.vertical-divider {
+  width: 1px;
+  height: 24px; // Çizgi boyu
+  background-color: #dee2e6; // İnce gri çizgi
+  margin: 0 5px; // Kenarlardan biraz boşluk
+}
+
+// --- AVATAR CIRCLE (Profil Sayfasındaki Tasarımın Aynısı) ---
+// Not: HTML tarafında class ismini "avatar-circle" yaptığımızdan emin olalım.
+.avatar-circle {
+  width: 45px;
+  height: 45px;
+  // Profil sayfasındaki turuncu gradient renkler:
+  background: linear-gradient(135deg, #ff9966, #ff5e62); 
+  color: white;
+  border-radius: 50%;
+  
+  // İçindeki yazıyı (ÖT) tam ortalamak için Flexbox şart:
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  
+  // Hafif kırmızımsı gölge
+  box-shadow: 0 4px 10px rgba(255, 94, 98, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover { 
+    transform: scale(1.05); // Hafif büyüme efekti
+    box-shadow: 0 6px 15px rgba(255, 94, 98, 0.6);
+  }
+}
+
+// --- HAMBURGER İKONU ---
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.55)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+
+// 🌙 DARK MODE AYARLARI
+:host-context([data-bs-theme="dark"]) {
+  
+  .navbar {
+    background-color: #262a43;
+    border-bottom: 1px solid #2f3455;
+  }
+
+  .navbar-brand { color: #ffffff !important; }
+
+  // Kapsül (Dark Mode)
+  .nav-pills-container {
+    background-color: #1a1e35; // Koyu zemin
+    border: 1px solid #2f3455;
+    box-shadow: none;
+  }
+
+  .nav-link {
+    color: #aab8c5;
+    
+    &:hover {
+      color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    &.active {
+      background-color: #5e72e4 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+  }
+
+  // Çizgi Rengi (Dark Mode)
+  .vertical-divider {
+    background-color: #2f3455; 
+  }
+
+  .navbar-toggler-icon {
+    filter: invert(1) grayscale(100%) brightness(200%);
+  }
+}
+
+// --- MOBİL DÜZELTMELERİ ---
+@media (max-width: 991px) {
+  // Mobilde çizgi gizlendiği için ekstra ayara gerek yok
+  // Sadece üstten biraz boşluk verelim
+  .navbar-right-side {
+    padding-bottom: 15px;
+    width: 100%;
+  }
+}
+
+// --- LOGO KISMI ---
+.navbar-brand {
+  // İkon ve Yazıyı kapsayan alan
+  .icon {
+    color: #ffffff !important; // Ok-Yay ikonu beyaz olsun
+    /* İstersen turuncu da yapabilirsin: color: #fb6340 !important; */
+  }
+
+  .text {
+    color: #ffffff !important; // "Job Hunter" yazısı beyaz olsun
+  }
+
+  &:hover {
+    .text { color: #e2e6ea !important; } // Üzerine gelince hafif grileşsin
+  }
+}

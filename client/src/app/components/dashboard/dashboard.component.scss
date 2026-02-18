@@ -1,0 +1,213 @@
+// Google Font benzeri modern bir font ailesi
+$font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+// --- SAYFA GENELİ ---
+.page-container {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+// --- BAŞLIKLAR ---
+.section-header {
+  margin-bottom: 25px;
+  border-left: 5px solid #5e72e4;
+  padding-left: 15px;
+
+  h2 {
+    font-family: $font-family;
+    font-weight: 700;
+    color: #32325d;
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    color: #8898aa;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+// --- ÜST KARTLAR (STATS) ---
+.stats-cards {
+  display: flex;
+  gap: 30px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  .card {
+    background: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 240px;
+    flex: 1;
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(50, 50, 93, 0.15);
+    }
+
+    .card-content {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .icon-box {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .info {
+      .title {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #8898aa;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+      .count {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #32325d;
+        line-height: 1;
+      }
+    }
+
+    // Renk Varyasyonları
+    &.total {
+      border-left: 6px solid #5e72e4;
+      .icon-box { background: rgba(94, 114, 228, 0.1); color: #5e72e4; }
+    }
+    &.ongoing {
+      border-left: 6px solid #fb6340;
+      .icon-box { background: rgba(251, 99, 64, 0.1); color: #fb6340; }
+    }
+    &.rejected {
+      border-left: 6px solid #f5365c;
+      .icon-box { background: rgba(245, 54, 92, 0.1); color: #f5365c; }
+    }
+  }
+}
+
+// --- GRAFİK KUTUSU (BEYAZ KUTU) ---
+.chart-area {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1);
+  margin-top: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// --- TEMA BUTONU ---
+.theme-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #e9ecef;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  color: #5e72e4;
+
+  &:hover {
+    transform: rotate(15deg);
+    background: #f6f9fc;
+  }
+  i { font-size: 1.2rem; }
+}
+h2, h3, h4, h5, .section-header h2 {
+  color: #f6f9fc !important;
+}
+
+// 🌙 DARK MODE (BOYUTU BOZMAYAN VERSİYON)
+:host-context([data-bs-theme="dark"]) {
+  
+  // 1. Yazı Renkleri
+  h2, h3, h4, h5, .section-header h2 {
+    color: #f6f9fc !important;
+  }
+  
+  // Haki renk
+  .text-muted, .subtitle, p {
+     color: #868170 !important;
+  }
+
+  // 2. KARTLAR VE GRAFİK KUTUSU
+  // Sadece ARKA PLAN rengini değiştiriyoruz, padding/margin dokunmuyoruz!
+  .card, .chart-area { 
+    background-color: #262a43 !important; 
+    border: 1px solid #2f3455 !important; // Çok ince çizgi
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
+  }
+
+  // 3. İstatistik Kartları (RENKLERİ GERİ GETİRME)
+  .stats-cards {
+    // Toplam Başvuru (Mavi)
+    .card.total {
+      border-left: 5px solid #5e72e4 !important; // Boyut aynı kalsın diye 6px yerine 5px
+      .icon-box { 
+        background: rgba(94, 114, 228, 0.2) !important;
+        color: #5e72e4 !important;
+      }
+    }
+    // Devam Eden (Turuncu)
+    .card.ongoing {
+      border-left: 5px solid #fb6340 !important;
+      .icon-box { 
+        background: rgba(251, 99, 64, 0.2) !important;
+        color: #fb6340 !important;
+      }
+    }
+    // Reddedilen (Kırmızı)
+    .card.rejected {
+      border-left: 5px solid #f5365c !important;
+      .icon-box { 
+        background: rgba(245, 54, 92, 0.2) !important;
+        color: #f5365c !important;
+      }
+    }
+    
+    // Kart içi yazılar
+    .card .info {
+        .title { color: #aab8c5 !important; }
+        .count { color: #ffffff !important; }
+    }
+  }
+
+  // 4. Grafik (Canvas)
+  canvas {
+    background-color: transparent !important; 
+  }
+
+  // 5. Tema Butonu
+  .theme-btn {
+    background: #262a43;
+    border-color: #2f3455;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  // 6. Arka Plan Temizliği
+  .page-container, .container {
+    background-color: transparent !important; 
+  }
+}

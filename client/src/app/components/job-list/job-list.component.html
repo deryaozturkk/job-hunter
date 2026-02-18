@@ -1,0 +1,202 @@
+<div class="container page-container">
+  
+  <div class="page-header">
+    <div class="header-left">
+      <h2>🗂️ İş Başvurularım</h2>
+      <p>Kariyer yolculuğunu buradan takip et.</p>
+    </div>
+    <div class="header-actions d-flex align-items-center gap-3">
+      
+      <button class="theme-btn" (click)="toggleTheme()" 
+              [title]="isDarkMode ? 'Aydınlık Mod' : 'Karanlık Mod'">
+        <i class="bi bi-sun-fill" *ngIf="isDarkMode" style="color: #ffc107;"></i>
+        <i class="bi bi-moon-stars-fill" *ngIf="!isDarkMode" style="color: #5e72e4;"></i>
+      </button>
+
+      <div class="dropdown">
+        
+        <button class="export-btn" type="button" (click)="toggleExport($event)">
+          <span class="icon">📤</span> 
+          <span class="text">Dışa Aktar</span>
+          
+          <i class="bi bi-chevron-down ms-2" 
+             [style.transform]="isExportOpen ? 'rotate(180deg)' : 'rotate(0deg)'" 
+             style="font-size: 0.8rem; transition: transform 0.2s;"></i>
+        </button>
+        
+        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" 
+            [class.show]="isExportOpen" 
+            style="border-radius: 12px; overflow: hidden;">
+            
+          <li>
+            <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:void(0)" (click)="confirmExport()">
+              <i class="bi bi-file-earmark-excel-fill" style="color: #2dce89; font-size: 1.2rem;"></i> 
+              <span style="font-weight: 500; color: #525f7f;">Excel İndir (.xlsx)</span>
+            </a>
+          </li>
+          <li><hr class="dropdown-divider my-1"></li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center gap-2 py-2" 
+               href="javascript:void(0)" 
+               (click)="confirmPdfExport()"> <i class="bi bi-file-earmark-pdf-fill" style="color: #f5365c; font-size: 1.2rem;"></i>
+              <span style="font-weight: 500; color: #525f7f;">PDF İndir (.pdf)</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+    </div>
+    <button class="btn-add" (click)="toggleForm()">
+      <span>{{ showForm ? '-' : '+' }}</span> {{ showForm ? 'Vazgeç' : 'Yeni Ekle' }}
+    </button>
+  </div>
+
+  <div class="form-card mb-4" *ngIf="showForm">
+    <h4 class="form-title">{{ isEditing ? '✏️ Başvuruyu Düzenle' : '✨ Yeni Başvuru Ekle' }}</h4>
+    
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label>Şirket Adı</label>
+        <input type="text" class="form-control form-control" [(ngModel)]="newJob.company" placeholder="Örn: Google">
+      </div>
+      <div class="col-md-6">
+        <label>Pozisyon</label>
+        <input type="text" class="form-control form-control" [(ngModel)]="newJob.position" placeholder="Örn: Frontend Dev">
+      </div>
+
+      <div class="col-md-4">
+        <label>Tarih</label>
+        <input type="date" class="form-control" [max]="todayDate" [ngModel]="newJob.applicationDate | date:'yyyy-MM-dd'" (ngModelChange)="newJob.applicationDate=$event">
+      </div>
+      <div class="col-md-4">
+        <label>Durum</label>
+        <select class="form-select" [(ngModel)]="newJob.status">
+          <option value="Başvuruldu">Başvuruldu</option>
+          <option value="Mülakat">Mülakat</option>
+          <option value="Teklif">Teklif</option>
+          <option value="Red">Red</option>
+          <option value="Beklemede">Beklemede</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label>Platform</label>
+        <select class="form-select" [(ngModel)]="newJob.platform">
+          <option value="" disabled selected>Seçiniz...</option> <option value="LinkedIn">LinkedIn</option>
+          <option value="Kariyer.net">Kariyer.net</option>
+          <option value="Diğer">Diğer</option>
+        </select>
+      </div>
+
+      <div class="col-12">
+        <label>İlan Linki (URL)</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light">🌐</span>
+          <input type="url" class="form-control" [(ngModel)]="newJob.url" placeholder="https://...">
+        </div>
+        <small class="text-muted ms-1">İlanın direkt linkini buraya yapıştırabilirsiniz.</small>
+      </div>
+    </div>
+
+    <div class="form-actions mt-4 text-end">
+      <button class="btn btn-secondary me-2" (click)="toggleForm()">İptal</button>
+      <button class="btn btn-primary" (click)="saveJob()" [disabled]="isLoading">
+        {{ isEditing ? 'Güncelle' : 'Kaydet' }}
+      </button>
+    </div>
+  </div>
+  
+  <div class="table-card">
+    
+    <div class="d-flex justify-content-between mb-3 align-items-center flex-wrap gap-2">
+      <div class="search-wrapper">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" [(ngModel)]="searchTerm" placeholder="Şirket ara...">
+        </div>
+      </div>
+      
+      <div class="filter-wrapper">
+        <select class="form-select" [(ngModel)]="filterStatus">
+          <option value="ALL">Tüm Başvurular</option>
+          <option value="Başvuruldu">Başvuruldu</option>
+          <option value="Mülakat">Mülakat</option>
+          <option value="Red">Red</option>
+          <option value="Teklif">Teklif</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table custom-table">
+        <thead>
+          <tr>
+            <th>Şirket</th>
+            <th>Pozisyon</th>
+            <th>Platform</th>
+            <th>Tarih</th>
+            <th>Durum</th>
+            <th class="text-end">İşlemler</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="isLoading && !showForm">
+            <td colspan="6" class="text-center py-5">Yükleniyor...</td>
+          </tr>
+
+          <tr *ngFor="let job of filteredJobs">
+            <td>
+              <div class="company-info">
+                <div class="logo-placeholder">{{ job.company.charAt(0).toUpperCase() }}</div>
+                <div class="company-name">{{ job.company }}</div>
+              </div>
+            </td>
+            <td class="fw-bold">{{ job.position }}</td>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                
+                <span class="platform-tag">{{ job.platform }}</span>
+                
+                <a *ngIf="job.url" 
+                   [href]="job.url" 
+                   target="_blank" 
+                   class="url-link-btn" 
+                   title="İlana Git">
+                  <i class="bi bi-box-arrow-up-right"></i> 
+                </a>
+                
+              </div>
+            </td>
+            <td class="text-muted">{{ job.applicationDate | date:'dd MMM yyyy' }}</td>
+            <td>
+              <span class="badge" [ngClass]="getStatusClass(job.status)">{{ job.status }}</span>
+            </td>
+            <td class="text-end action-buttons">
+              <button class="btn-icon edit" (click)="onEdit(job)" title="Düzenle">✏️</button>
+              
+              <button class="btn-icon note" (click)="openNoteModal(job)" title="Notlar">
+                <i class="bi" 
+                   [class.bi-journal-bookmark-fill]="job.note" 
+                   [class.bi-journal-plus]="!job.note"
+                   [style.color]="job.note ? '#fb6340' : '#8898aa'"></i>
+              </button>
+
+              <button class="btn-icon delete" (click)="deleteJob(job.id)" title="Sil">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="filteredJobs.length === 0 && !isLoading" class="text-center py-5 fade-in">
+      <div class="mb-3" style="font-size: 3rem; opacity: 0.5;">
+        🕵️‍♂️
+      </div>
+      <h4 class="text-muted fw-bold">Sonuç Bulunamadı</h4>
+      <p class="text-muted">
+        Aradığın kriterlere uygun bir iş kaydı yok. <br>
+        Yeni bir tane eklemeye ne dersin?
+      </p>
+    </div>
+    
+  </div>
+</div>

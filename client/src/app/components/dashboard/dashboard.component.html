@@ -1,0 +1,69 @@
+<div class="container page-container">  
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold text-dark">🚀 Genel Bakış</h2>
+      <p class="text-muted">Kariyer yolculuğundaki son durumun</p>
+    </div>
+
+    <button class="theme-btn" (click)="toggleTheme()" 
+            [title]="isDarkMode ? 'Aydınlık Mod' : 'Karanlık Mod'">
+      <i class="bi bi-sun-fill" *ngIf="isDarkMode" style="color: #ffc107;"></i>
+      <i class="bi bi-moon-stars-fill" *ngIf="!isDarkMode" style="color: #5e72e4;"></i>
+    </button>
+  </div>
+
+  <div class="stats-cards">
+    
+    <div class="card total">
+      <div class="card-content">
+        <div class="icon-box">💼</div>
+        <div class="info">
+          <div class="title">Toplam Başvuru</div>
+          <div class="count">{{ totalCount }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card ongoing">
+      <div class="card-content">
+        <div class="icon-box">⏳</div>
+        <div class="info">
+          <div class="title">Süreci Devam Eden</div>
+          <div class="count">{{ ongoingCount }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card rejected">
+      <div class="card-content">
+        <div class="icon-box">⛔</div>
+        <div class="info">
+          <div class="title">Reddedilen</div>
+          <div class="count">{{ rejectedCount }}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-header mt-5">
+    <h2>📊 Durum Analizi</h2>
+    <p class="subtitle">Başvurularının oransal dağılımı</p>
+  </div>
+  
+  <div class="row justify-content-center chart-area">
+    <div class="col-md-8 col-lg-5" *ngIf="pieChartLabels.length > 0">
+       <canvas baseChart
+            [type]="'doughnut'"
+            [datasets]="pieChartDatasets"
+            [labels]="pieChartLabels"
+            [options]="pieChartOptions"
+            [legend]="pieChartLegend">
+      </canvas>
+    </div>
+  </div>
+
+  <p *ngIf="pieChartLabels.length === 0" class="text-center mt-3 text-muted">
+    Henüz gösterilecek veri yok.
+  </p>
+</div>
