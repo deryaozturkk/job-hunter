@@ -5,7 +5,7 @@ import { UpdateJobDto } from './dto/update-job.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('jobs')
-@UseGuards(JwtAuthGuard) // Tüm route'ları korumaya aldık
+@UseGuards(JwtAuthGuard) 
 export class JobsController {
   constructor(private readonly jobsService: JobsService) {}
 
@@ -20,7 +20,6 @@ export class JobsController {
     return this.jobsService.findAll(req.user.userId);
   }
 
-  // STATS ROUTE'U HER ZAMAN :id'DEN ÖNCE OLMALI!
   @Get('stats')
   getStats(@Request() req) {
     return this.jobsService.getJobStats(req.user.userId);

@@ -23,15 +23,14 @@ const Toast = Swal.mixin({
 @Component({
   selector: 'app-job-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule], // Modules buraya
+  imports: [CommonModule, FormsModule, RouterModule], 
   templateUrl: './job-list.component.html',
   styleUrls: ['./job-list.component.scss']
 })
 export class JobListComponent implements OnInit {
   
-  jobs: Job[] = []; // Ana liste
+  jobs: Job[] = []; 
   
-  // Form verisi
   newJob: any = {
     company: '',
     position: '',
@@ -50,36 +49,31 @@ export class JobListComponent implements OnInit {
   isDarkMode: boolean = false;
 
 
-  // Tasarım için: Form açık mı kapalı mı?
   showForm: boolean = false; 
 
   constructor(private jobService: JobService) {}
 
-  // Toast Ayarı (Sağ üst köşede çıkan bildirim)
   
   ngOnInit(): void {
     this.loadJobs();
 
-    // 1. Sayfa açılınca hafızaya bak: Kullanıcı daha önce Dark Mode seçmiş mi?
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       this.isDarkMode = true;
-      this.applyTheme(); // Temayı uygula
+      this.applyTheme(); 
     }
   }
 
-  // 2. Temayı Değiştiren Fonksiyon (Butona basınca çalışacak)
   toggleTheme(): void {
     this.isDarkMode = !this.isDarkMode;
-    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light'); // Hafızaya kaydet
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light'); 
     this.applyTheme();
   }
 
-  // 3. HTML'e "Koyu Mod" emrini veren yardımcı fonksiyon
   private applyTheme(): void {
     const htmlTag = document.documentElement;
     if (this.isDarkMode) {
-      htmlTag.setAttribute('data-bs-theme', 'dark'); // Bootstrap'in sihirli kodu
+      htmlTag.setAttribute('data-bs-theme', 'dark'); 
     } else {
       htmlTag.setAttribute('data-bs-theme', 'light');
     }
@@ -103,14 +97,12 @@ export class JobListComponent implements OnInit {
 
   // Filtreleme Mantığı 
   get filteredJobs() {
-    // 1. Adım: Statü Filtresi
     let result = this.filterStatus === 'ALL'
       ? this.jobs
       : this.jobs.filter(job => job.status === this.filterStatus);
 
-    // 2. Adım: Arama Filtresi (Eğer arama kutusuna bir şey yazıldıysa)
     if (this.searchTerm.trim() !== '') {
-      const term = this.searchTerm.toLowerCase(); // Küçük harfe çevir ki büyük/küçük duyarlı olmasın
+      const term = this.searchTerm.toLowerCase(); 
       
       result = result.filter(job => 
         job.company.toLowerCase().includes(term) || // Şirket adında ara
@@ -121,13 +113,12 @@ export class JobListComponent implements OnInit {
 
     return result;
   }
-// 1. Menüyü Aç/Kapa Yapan Fonksiyon
   toggleExport(event: Event): void {
     event.stopPropagation(); // Tıklama olayının yukarı sıçramasını engeller
     this.isExportOpen = !this.isExportOpen;
   }
 
-  // 2. Sayfanın Boş Bir Yerine Tıklayınca Menüyü Kapat
+  // Sayfanın Boş Bir Yerine Tıklayınca Menüyü Kapat
   @HostListener('document:click', ['$event'])
   closeMenu(event: Event): void {
     this.isExportOpen = false;
@@ -150,9 +141,7 @@ export class JobListComponent implements OnInit {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Kaydet (Hem Ekleme Hem Güncelleme)
   saveJob(): void {
-    // 1. VALIDATION (Uyarı)
     if (!this.newJob.company || !this.newJob.position || !this.newJob.applicationDate) {
       Swal.fire({
         icon: 'warning',
@@ -167,7 +156,6 @@ export class JobListComponent implements OnInit {
     this.isLoading = true;
   
     if (this.isEditing && this.currentJobId) {
-      // GÜNCELLEME
       this.jobService.updateJob(this.currentJobId, this.newJob).subscribe({
         next: (updatedJob) => {
           const index = this.jobs.findIndex(j => j.id === updatedJob.id);
@@ -177,7 +165,6 @@ export class JobListComponent implements OnInit {
           this.isLoading = false;
           this.showForm = false;
   
-          // BAŞARI MESAJI (Toast)
           Toast.fire({
             icon: 'success',
             title: 'Başvuru başarıyla güncellendi'
@@ -189,7 +176,6 @@ export class JobListComponent implements OnInit {
         }
       });
     } else {
-      // YENİ EKLEME
       this.jobService.createJob(this.newJob).subscribe({
         next: (createdJob) => {
           this.jobs.unshift(createdJob);
@@ -197,7 +183,6 @@ export class JobListComponent implements OnInit {
           this.isLoading = false;
           this.showForm = false;
   
-          // BAŞARI MESAJI (Toast)
           Toast.fire({
             icon: 'success',
             title: 'Yeni başvuru eklendi'
@@ -211,9 +196,7 @@ export class JobListComponent implements OnInit {
     }
   }
 
-  // Silme
   deleteJob(id: number): void {
-    // SİLME ONAYI (Güzel bir soru kutusu)
     Swal.fire({
       title: 'Emin misin?',
       text: "Bu başvuruyu silmek istediğine emin misin? Bu işlem geri alınamaz!",
@@ -225,7 +208,6 @@ export class JobListComponent implements OnInit {
       cancelButtonText: 'Vazgeç'
     }).then((result) => {
       if (result.isConfirmed) {
-        // Kullanıcı 'Evet' dedi, şimdi silelim
         this.jobService.deleteJob(id).subscribe({
           next: () => {
             this.jobs = this.jobs.filter(job => job.id !== id);
@@ -235,7 +217,6 @@ export class JobListComponent implements OnInit {
               this.showForm = false; // Formu gizle
             }
 
-            // SİLİNDİ MESAJI
             Toast.fire({
               icon: 'success',
               title: 'Başvuru silindi'
@@ -268,7 +249,6 @@ export class JobListComponent implements OnInit {
     }
   }
 
-  // 1. KULLANICIYA SORAN FONKSİYON
   confirmExport(): void {
     Swal.fire({
       title: 'Excel İndirilsin mi?',
@@ -286,7 +266,6 @@ export class JobListComponent implements OnInit {
     });
   }
 
-  // 2. İŞLEMİ YAPAN GİZLİ FONKSİYON
   private exportToExcel(): void {
     const exportData = this.jobs.map(job => ({
       'Şirket': job.company,
@@ -313,11 +292,10 @@ export class JobListComponent implements OnInit {
   }
 
 
-  // NOT EKLEME / DÜZENLEME PENCERESİ
   async openNoteModal(job: Job): Promise<void> {
     const { value: text } = await Swal.fire({
       title: `${job.company} - Notlar`,
-      input: 'textarea', // Metin kutusu olsun
+      input: 'textarea',
       inputLabel: 'Mülakat detayları, maaş beklentisi vb.',
       inputValue: job.note || '', // Varsa eski notu getir
       inputPlaceholder: 'Buraya notlarınızı yazın...',
@@ -355,9 +333,6 @@ export class JobListComponent implements OnInit {
     }
   }
 
-  // ... importlar aynen kalsın ...
-
-  //  1. PDF ONAY FONKSİYONU
   confirmPdfExport() {
     Swal.fire({
       title: 'PDF İndirilsin mi?',
@@ -375,14 +350,13 @@ export class JobListComponent implements OnInit {
     });
   }
 
-  //  2. GÜNCELLENMİŞ: PDF DIŞA AKTARMA
   exportToPdf() {
     const doc = new jsPDF();
 
-    // --- Tarih Formatı (31.01.2026) ---
+    //Tarih Formatı (31.01.2026)
     const today = new Date().toLocaleDateString('tr-TR'); 
 
-    // --- Başlık ---
+    //Başlık
     doc.setFontSize(18);
     // Türkçe karakterleri temizleyerek yazdırıyoruz
     doc.text(this.normalizeTurkish('Job Hunter - Basvuru Listesi'), 14, 20);
@@ -390,17 +364,17 @@ export class JobListComponent implements OnInit {
     doc.setFontSize(10);
     doc.text(`Tarih: ${today}`, 14, 28);
 
-    // --- Tablo Verisini Hazırla ---
+    //Tablo Verisini Hazırla
     const data = this.filteredJobs.map(job => [
       this.normalizeTurkish(job.company),  // Google -> Google
       this.normalizeTurkish(job.position), // Full Stack -> Full Stack
       this.normalizeTurkish(job.platform), // Kariyer.net -> Kariyer.net
       new Date(job.applicationDate).toLocaleDateString('tr-TR'), // 28.01.2026
-      this.normalizeTurkish(job.status),   // Başvuruldu -> Basvuruldu (Bozulmadan)
+      this.normalizeTurkish(job.status),   // Başvuruldu -> Basvuruldu 
       job.url ? 'Link Var' : '-' 
     ]);
 
-    // --- Tabloyu Oluştur ---
+    //Tabloyu Oluştur
     autoTable(doc, {
       head: [['Sirket', 'Pozisyon', 'Platform', 'Tarih', 'Durum', 'Link']],
       body: data,
@@ -411,15 +385,15 @@ export class JobListComponent implements OnInit {
         cellPadding: 3,
       },
       headStyles: {
-        fillColor: [94, 114, 228], // Job Hunter Mavisi
+        fillColor: [94, 114, 228], 
         textColor: [255, 255, 255]
       }
     });
 
-    // --- Dosyayı Kaydet ---
+    //Dosyayı Kaydet
     doc.save(`JobHunter_Basvurular_${today}.pdf`);
     
-    // --- Bildirim ---
+    //Bildirim
     this.isExportOpen = false;
     
     const Toast = Swal.mixin({
@@ -440,14 +414,12 @@ export class JobListComponent implements OnInit {
     });
   }
 
-  //  3. TÜRKÇE KARAKTER TEMİZLEYİCİ (Helper)
-  // Bu fonksiyon bozuk görünen karakterleri düzeltir (ş->s, ğ->g vb.)
   normalizeTurkish(text: string): string {
     if (!text) return '';
     const map: { [key: string]: string } = {
       'ç': 'c', 'Ç': 'C',
       'ğ': 'g', 'Ğ': 'G',
-      'ı': 'i', 'I': 'I', // jsPDF 'I' harfini sever ama 'ı' sevmez
+      'ı': 'i', 'I': 'I', 
       'İ': 'I', 'i': 'i',
       'ö': 'o', 'Ö': 'O',
       'ş': 's', 'Ş': 'S',

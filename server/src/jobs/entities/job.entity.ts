@@ -25,12 +25,12 @@ export class Job {
     @Column({ nullable: true })
     url: string;
 
-    @Column({ type: 'text', nullable: true }) // 'text' tipi uzun yazılar içindir
+    @Column({ type: 'text', nullable: true }) 
     note: string;
 
     @ManyToOne(() => User, (user) => user.jobs, { eager: false })
     user: User;
 
-    @Column({ nullable: true }) // Geçici olarak nullable yapıyoruz ki mevcut veriler patlamasın
+    @Column({ nullable: true }) 
     userId: number;
 }

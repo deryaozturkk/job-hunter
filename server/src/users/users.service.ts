@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
-import { CreateUserDto } from './dto/create-user.dto'; // DTO'yu kullanıyoruz
+import { CreateUserDto } from './dto/create-user.dto'; 
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
@@ -39,7 +39,6 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    // Eğer update içinde şifre de geliyorsa onu da hash'lemek gerekir
     if (updateUserDto.password) {
       updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
     }

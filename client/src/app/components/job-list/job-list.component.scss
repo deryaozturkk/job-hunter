@@ -1,4 +1,4 @@
-// --- RENK PALETİ ---
+//RENK PALETİ
 $primary: #5e72e4;
 $success: #2dce89;
 $danger: #f5365c;
@@ -13,7 +13,7 @@ $light-bg: #f6f9fc;
   transition: background-color 0.3s ease;
 }
 
-// --- ÜST KISIM (HEADER) ---
+//ÜST KISIM (HEADER)
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -42,9 +42,9 @@ $light-bg: #f6f9fc;
   }
 }
 
-// --- BUTONLAR ---
+//BUTONLAR
 
-// 1. Yeni Ekle Butonu
+// Yeni Ekle Butonu
 .btn-add {
   background: linear-gradient(87deg, $primary 0, #825ee4 100%);
   border: none;
@@ -63,7 +63,7 @@ $light-bg: #f6f9fc;
   }
 }
 
-// 2. Dışa Aktar (Export) Butonu
+// Dışa Aktar (Export) Butonu
 .export-btn {
   background: white;
   color: #525f7f;
@@ -90,7 +90,7 @@ $light-bg: #f6f9fc;
   }
 }
 
-// 3. Tema Değiştirme (Dark Mode) Butonu
+// Tema Değiştirme (Dark Mode) Butonu
 .theme-btn {
   width: 40px;
   height: 40px;
@@ -112,7 +112,7 @@ $light-bg: #f6f9fc;
   i { font-size: 1.2rem; }
 }
 
-// --- AÇILIR MENÜ (DROPDOWN) ---
+//AÇILIR MENÜ (DROPDOWN)
 .dropdown-menu {
   margin-top: 10px !important;
   animation: slideDownFade 0.2s ease-out;
@@ -133,7 +133,7 @@ $light-bg: #f6f9fc;
   }
 }
 
-// --- FORM KARTI ---
+//FORM KARTI
 .form-card {
   background: #ffffff;
   padding: 25px;
@@ -190,7 +190,7 @@ $light-bg: #f6f9fc;
   }
 }
 
-// --- TABLO KARTI VE ARAMA ---
+//TABLO KARTI VE ARAMA
 .table-card {
   background: white;
   border-radius: 12px;
@@ -232,7 +232,7 @@ $light-bg: #f6f9fc;
   i, .search-icon { color: #adb5bd; font-size: 1.1rem;}
 }
 
-// --- TABLO DETAYLARI ---
+//TABLO DETAYLARI
 .custom-table {
   width: 100%;
   border-collapse: separate;
@@ -370,13 +370,13 @@ $light-bg: #f6f9fc;
   &:hover { background: #e9ecef; color: #32325d; }
 }
 
-// --- ANİMASYONLAR ---
+//ANİMASYONLAR
 @keyframes slideDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes slideDownFade { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeInUp { from { opacity: 0; transform: translate3d(0, 20px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
 
 
-// 🌙 DARK MODE (KOYU MOD) AYARLARI - GÜNCELLENMİŞ
+// 🌙 DARK MODE (KOYU MOD) AYARLARI 
 :host-context([data-bs-theme="dark"]) {  
   .page-container {
     background-color: #1a1e35;

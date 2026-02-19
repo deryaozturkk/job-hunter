@@ -14,7 +14,6 @@ import { FormsModule } from '@angular/forms';
 export class ProfileComponent implements OnInit {
   user: any = { id: 0, fullName: '', email: '' };
   
-  // Düzenleme modu değişkenleri
   isEditing = false;
   editData: any = {}; 
 
@@ -46,12 +45,10 @@ export class ProfileComponent implements OnInit {
     };
   }
 
-  // Vazgeç
   cancelEdit() {
     this.isEditing = false;
   }
 
-  // Kaydet
   saveChanges() {
     // Sadece dolu olan alanları gönderelim
     const updatePayload: any = { fullName: this.editData.fullName };

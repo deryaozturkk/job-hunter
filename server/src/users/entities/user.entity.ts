@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Job } from '../../jobs/entities/job.entity'; // Job entity'sini içeri alıyoruz
+import { Job } from '../../jobs/entities/job.entity'; 
 
 @Entity('users')
 export class User {

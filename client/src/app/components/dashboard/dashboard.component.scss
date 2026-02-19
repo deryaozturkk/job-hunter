@@ -1,13 +1,12 @@
-// Google Font benzeri modern bir font ailesi
 $font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
-// --- SAYFA GENELİ ---
+// SAYFA GENELİ
 .page-container {
   padding-top: 30px;
   padding-bottom: 50px;
 }
 
-// --- BAŞLIKLAR ---
+// BAŞLIKLAR
 .section-header {
   margin-bottom: 25px;
   border-left: 5px solid #5e72e4;
@@ -28,7 +27,7 @@ $font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
 }
 
-// --- ÜST KARTLAR (STATS) ---
+// ÜST KARTLAR 
 .stats-cards {
   display: flex;
   gap: 30px;
@@ -102,7 +101,7 @@ $font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
 }
 
-// --- GRAFİK KUTUSU (BEYAZ KUTU) ---
+// GRAFİK KUTUSU (BEYAZ KUTU) 
 .chart-area {
   background: #fff;
   border-radius: 12px;
@@ -114,7 +113,7 @@ $font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   margin-right: auto;
 }
 
-// --- TEMA BUTONU ---
+//  TEMA BUTONU 
 .theme-btn {
   width: 40px;
   height: 40px;
@@ -139,10 +138,10 @@ h2, h3, h4, h5, .section-header h2 {
   color: #f6f9fc !important;
 }
 
-// 🌙 DARK MODE (BOYUTU BOZMAYAN VERSİYON)
+// 🌙 DARK MODE 
 :host-context([data-bs-theme="dark"]) {
   
-  // 1. Yazı Renkleri
+  // Yazı Renkleri
   h2, h3, h4, h5, .section-header h2 {
     color: #f6f9fc !important;
   }
@@ -152,19 +151,16 @@ h2, h3, h4, h5, .section-header h2 {
      color: #868170 !important;
   }
 
-  // 2. KARTLAR VE GRAFİK KUTUSU
-  // Sadece ARKA PLAN rengini değiştiriyoruz, padding/margin dokunmuyoruz!
   .card, .chart-area { 
     background-color: #262a43 !important; 
-    border: 1px solid #2f3455 !important; // Çok ince çizgi
+    border: 1px solid #2f3455 !important; 
     box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
   }
 
-  // 3. İstatistik Kartları (RENKLERİ GERİ GETİRME)
   .stats-cards {
     // Toplam Başvuru (Mavi)
     .card.total {
-      border-left: 5px solid #5e72e4 !important; // Boyut aynı kalsın diye 6px yerine 5px
+      border-left: 5px solid #5e72e4 !important; 
       .icon-box { 
         background: rgba(94, 114, 228, 0.2) !important;
         color: #5e72e4 !important;
@@ -194,19 +190,19 @@ h2, h3, h4, h5, .section-header h2 {
     }
   }
 
-  // 4. Grafik (Canvas)
+  // Grafik (Canvas)
   canvas {
     background-color: transparent !important; 
   }
 
-  // 5. Tema Butonu
+  // Tema Butonu
   .theme-btn {
     background: #262a43;
     border-color: #2f3455;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
 
-  // 6. Arka Plan Temizliği
+  // Arka Plan Temizliği
   .page-container, .container {
     background-color: transparent !important; 
   }

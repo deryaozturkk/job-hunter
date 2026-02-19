@@ -1,5 +1,3 @@
-/* styles.scss - GÜNCEL HALİ */
-
 /* Sayfa zıplamasını engellemek için */
 html {
   overflow-y: scroll;
@@ -19,7 +17,7 @@ html, body {
   height: 100%;
 }
 
-/* --- ANİMASYONLAR --- */
+/*ANİMASYONLAR*/
 @keyframes fadeInUp {
 from { opacity: 0; transform: translate3d(0, 20px, 0); }
 to { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -36,7 +34,7 @@ app-job-list .page-header {
 animation: fadeInUp 0.8s ease-out forwards;
 }
 
-/* --- GLOBAL DARK SCROLLBAR (Her zaman şık dursun) --- */
+/* GLOBAL DARK SCROLLBAR */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -51,12 +49,12 @@ animation: fadeInUp 0.8s ease-out forwards;
   background: #5e72e4; 
 }
 
-/* Navbar Ayarları (Global) */
+/* Navbar Ayarları */
 .navbar {
   background-color: transparent !important; /* Arkaplanla bütünleşsin */
 }
 
-/* --- GLOBAL TEXT COLORS (ZORUNLU BEYAZ) --- */
+/*GLOBAL TEXT COLORS*/
 
 /* Tüm başlık etiketleri (h1-h6) ve class'ları */
 h1, h2, h3, h4, h5, h6,
@@ -66,7 +64,7 @@ h1, h2, h3, h4, h5, h6,
 
 /* "Sonuç Bulunamadı" gibi alt metinler genelde 'text-muted' olur */
 .text-muted {
-  color: #aab8c5 !important; /* Açık gri (okunabilir) yapalım */
+  color: #aab8c5 !important; /* Açık gri yapalım */
 }
 
 /* Genel yazı rengi */
