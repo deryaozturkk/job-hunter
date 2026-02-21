@@ -4,37 +4,45 @@ import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/auth';
+  // Temel URL'i merkezileştirdik
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
   login(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
+    // apiUrl kullanarak /auth/login'e gidiyoruz
+    return this.http.post(`${this.apiUrl}/auth/login`, credentials).pipe(
       tap((res: any) => {
-        if (res.access_token) {
-          localStorage.setItem('job_hunter_token', res.access_token);
+        if (res && res.data && res.data.access_token) {
+          localStorage.setItem('job_hunter_token', res.data.access_token);
         }
       })
     );
+  }
+
+  register(userData: any): Observable<any> {
+    // apiUrl kullanarak /users'a (kayıt) gidiyoruz
+    return this.http.post(`${this.apiUrl}/users`, userData);
+  }
+
+  updateUser(userId: number, data: any): Observable<any> {
+    // apiUrl kullanarak belirli bir user'ı güncelliyoruz
+    return this.http.patch(`${this.apiUrl}/users/${userId}`, data);
   }
 
   getToken() {
     return localStorage.getItem('job_hunter_token');
   }
 
-  register(userData: any): Observable<any> {
-    return this.http.post('http://localhost:3000/users', userData);
-  }
-
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('job_hunter_token');
+    return !!this.getToken();
   }
 
   logout() {
     localStorage.removeItem('job_hunter_token');
   }
 
-public decodeToken(token: string): any {
+  public decodeToken(token: string): any {
     try {
       const base64Url = token.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -65,9 +73,4 @@ public decodeToken(token: string): any {
       .toUpperCase()
       .substring(0, 2); 
   }
-
-  updateUser(userId: number, data: any): Observable<any> {
-    return this.http.patch(`http://localhost:3000/users/${userId}`, data);
-  }
-  
 }

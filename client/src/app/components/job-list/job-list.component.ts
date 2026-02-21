@@ -79,19 +79,18 @@ export class JobListComponent implements OnInit {
     }
   }
 
-  // İşleri Getir ve TARİHE GÖRE SIRALA
   loadJobs(): void {
-    this.isLoading = true;
     this.jobService.getJobs().subscribe({
-      next: (data) => {
-        // En yeni tarih en üstte olsun
-        this.jobs = data.sort((a, b) => new Date(b.applicationDate).getTime() - new Date(a.applicationDate).getTime());
-        this.isLoading = false;
+      next: (res: any) => {
+        // Backend'den gelen paketin içindeki asıl listeye ulaşıyoruz
+        if (res && res.data) {
+          const jobList = res.data; 
+          this.jobs = jobList.sort((a: any, b: any) => {
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+          });
+        }
       },
-      error: (err) => {
-        console.error('Hata:', err);
-        this.isLoading = false;
-      }
+      error: (err) => console.error('İş listesi çekilemedi:', err)
     });
   }
 

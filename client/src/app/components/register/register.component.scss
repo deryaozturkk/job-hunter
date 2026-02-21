@@ -1,0 +1,86 @@
+.register-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #1e1e2f 0%, #2d2d44 100%);
+  
+    .register-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 2.5rem;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      width: 100%;
+      max-width: 400px;
+      color: white;
+  
+      h2 { text-align: center; margin-bottom: 2rem; font-weight: 600; }
+  
+      .form-group {
+        margin-bottom: 1.2rem; 
+        label { display: block; margin-bottom: 0.5rem; color: #ccc; }
+        
+        input {
+          width: 100%;
+          padding: 0.8rem;
+          border-radius: 8px;
+          border: 1px solid #444;
+          background: #1a1a2e;
+          color: white;
+          transition: border-color 0.3s;
+  
+          &:focus { border-color: #6c5ce7; outline: none; }
+  
+          // Reactive Forms Invalid Durumu
+          &.ng-invalid.ng-touched {
+            border-color: #ff7675; // Hata durumunda kırmızı kenarlık
+          }
+        }
+  
+        .error {
+          color: #ff7675;
+          font-size: 0.8rem;
+          margin-top: 0.4rem;
+          font-weight: 500;
+        }
+      }
+  
+      button {
+        width: 100%;
+        padding: 0.8rem;
+        border: none;
+        border-radius: 8px;
+        background: #6c5ce7;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 1rem;
+  
+        &:hover:not(:disabled) { background: #5b4cc4; }
+  
+        // Buton pasifken (form geçersizken) görünümü
+        &:disabled {
+          background: #444;
+          cursor: not-allowed;
+          opacity: 0.6;
+        }
+      }
+  
+      p {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #ccc;
+        font-size: 0.9rem;
+  
+        a {
+          color: #a29bfe;
+          text-decoration: none;
+          font-weight: 600;
+          &:hover { text-decoration: underline; }
+        }
+      }
+    }
+  }

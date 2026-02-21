@@ -1,0 +1,32 @@
+<div class="register-container">
+    <div class="register-card">
+      <h2>Yeni Hesap Oluştur</h2>
+      
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>E-posta</label>
+          <input type="email" formControlName="email" placeholder="E-postanızı girin">
+          <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error">
+            Geçerli bir e-posta adresi giriniz.
+          </div>
+        </div>
+    
+        <div class="form-group">
+          <label>Şifre</label>
+          <input type="password" formControlName="password" placeholder="En az 6 karakter">
+          <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error">
+            Şifre en az 6 karakter olmalıdır.
+          </div>
+        </div>
+    
+        <div class="form-group">
+          <label>Ad Soyad (Opsiyonel)</label>
+          <input type="text" formControlName="fullName" placeholder="Adınız Soyadınız">
+        </div>
+    
+        <button type="submit" [disabled]="registerForm.invalid">Kayıt Ol</button>
+      </form>
+    
+      <p>Zaten hesabınız var mı? <a routerLink="/login">Giriş Yap</a></p>
+    </div>
+  </div>

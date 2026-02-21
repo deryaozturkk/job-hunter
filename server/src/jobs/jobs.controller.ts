@@ -3,9 +3,10 @@ import { JobsService } from './jobs.service';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { ParseIntPipe } from '@nestjs/common';
 
 @Controller('jobs')
-@UseGuards(JwtAuthGuard) 
+@UseGuards(JwtAuthGuard) //jwt.strategy.ts dosyasındaki validate() metodundan gelen verinin varlığını kontrol eder.
 export class JobsController {
   constructor(private readonly jobsService: JobsService) {}
 
@@ -26,12 +27,8 @@ export class JobsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    const numericId = Number(id);
-    if (isNaN(numericId)) {
-      throw new BadRequestException('Geçersiz İş ID formatı (NaN)');
-    }
-    return this.jobsService.findOne(numericId);
+  findOne(@Param('id', ParseIntPipe) id: number) { // kod tekrarından kaçınmak ve veri güvenliği için Built-in Pipe'ları tercih ettim.
+    return this.jobsService.findOne(id);
   }
 
   @Patch(':id')
@@ -40,11 +37,7 @@ export class JobsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    const numericId = Number(id);
-    if (isNaN(numericId)) {
-      throw new BadRequestException('Silme işlemi için geçersiz ID');
-    }
-    return this.jobsService.remove(numericId);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.jobsService.remove(id);
   }
 }
