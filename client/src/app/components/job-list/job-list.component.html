@@ -75,7 +75,6 @@
           <option value="Mülakat">Mülakat</option>
           <option value="Teklif">Teklif</option>
           <option value="Red">Red</option>
-          <option value="Beklemede">Beklemede</option>
         </select>
       </div>
       <div class="col-md-4">
@@ -146,7 +145,7 @@
           <tr *ngFor="let job of filteredJobs">
             <td>
               <div class="company-info">
-                <div class="logo-placeholder">{{ job.company.charAt(0).toUpperCase() }}</div>
+                <div class="logo-placeholder">{{ (job.company.charAt(0) || '?').toUpperCase() }}</div>
                 <div class="company-name">{{ job.company }}</div>
               </div>
             </td>

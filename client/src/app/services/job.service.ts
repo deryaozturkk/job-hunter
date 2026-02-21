@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Job {
@@ -26,20 +26,31 @@ export class JobService {
 
   constructor(private http: HttpClient) { }
 
-  getJobs(): Observable<Job[]> {
-    return this.http.get<Job[]>(this.apiUrl);
-  }
+// Ortak Header Helper Metodu
+private getHeaders() {
+  const token = localStorage.getItem('job_hunter_token'); 
+  return new HttpHeaders({
+    'Authorization': `Bearer ${token}` 
+  });
+}
 
-  createJob(job: any): Observable<Job> {
-    return this.http.post<Job>(this.apiUrl, job);
-  }
-  deleteJob(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
-  }
-  updateJob(id: number, job: Job): Observable<Job> {
-    return this.http.patch<Job>(`${this.apiUrl}/${id}`, job);
-  }
-  getJobStats(): Observable<JobStats[]> {
-    return this.http.get<JobStats[]>(this.apiUrl + '/stats');
-  }
+getJobs(): Observable<Job[]> {
+  return this.http.get<Job[]>(this.apiUrl, { headers: this.getHeaders() }); 
+}
+
+createJob(job: any): Observable<Job> {
+  return this.http.post<Job>(this.apiUrl, job, { headers: this.getHeaders() }); 
+}
+
+deleteJob(id: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getHeaders() }); 
+}
+
+updateJob(id: number, job: Partial<Job>): Observable<any> {
+  return this.http.patch(`${this.apiUrl}/${id}`, job, { headers: this.getHeaders() });
+}
+
+getJobStats(): Observable<JobStats[]> {
+  return this.http.get<JobStats[]>(`${this.apiUrl}/stats`, { headers: this.getHeaders() }); 
+}
 }

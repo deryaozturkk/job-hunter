@@ -17,14 +17,11 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
-    console.log('Butona basıldı!', this.loginData);
     this.authService.login(this.loginData).subscribe({
       next: (response) => {
-        console.log('Giriş başarılı, gelen yanıt:', response);
         this.router.navigate(['/jobs']);
       },
       error: (err) => {
-        console.error('Giriş hatası detayı:', err);
         alert('Giriş yapılamadı: ' + (err.error?.message || 'Sunucuya ulaşılamıyor'));
       }
     });

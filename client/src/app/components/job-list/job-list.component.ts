@@ -104,9 +104,9 @@ export class JobListComponent implements OnInit {
       const term = this.searchTerm.toLowerCase(); 
       
       result = result.filter(job => 
-        job.company.toLowerCase().includes(term) || // Şirket adında ara
-        job.position.toLowerCase().includes(term) || // Pozisyonda ara
-        job.platform.toLowerCase().includes(term)    // Platformda ara
+        (job.company?.toLowerCase()?.includes(term) ?? false) || 
+        (job.position?.toLowerCase()?.includes(term) ?? false) || 
+        (job.platform?.toLowerCase()?.includes(term) ?? false)
       );
     }
 
@@ -141,12 +141,12 @@ export class JobListComponent implements OnInit {
   }
 
   saveJob(): void {
+    // Validasyon Kontrolü
     if (!this.newJob.company || !this.newJob.position || !this.newJob.applicationDate) {
       Swal.fire({
         icon: 'warning',
         title: 'Eksik Bilgi',
         text: 'Lütfen Şirket, Pozisyon ve Tarih alanlarını doldurunuz!',
-        confirmButtonText: 'Tamam',
         confirmButtonColor: '#5e72e4'
       });
       return;
@@ -154,45 +154,67 @@ export class JobListComponent implements OnInit {
   
     this.isLoading = true;
   
+    // DTO'ya uygun temiz veri paketi hazırlıyoruz
+    const jobPayload : any = {
+      company: this.newJob.company,
+      position: this.newJob.position,
+      platform: this.newJob.platform,
+      status: this.newJob.status,
+      applicationDate: this.newJob.applicationDate,
+    };
+  
+    if (this.newJob.url && this.newJob.url.trim() !== '') {
+      jobPayload.url = this.newJob.url;
+    }
+
     if (this.isEditing && this.currentJobId) {
-      this.jobService.updateJob(this.currentJobId, this.newJob).subscribe({
-        next: (updatedJob) => {
-          const index = this.jobs.findIndex(j => j.id === updatedJob.id);
-          if (index !== -1) this.jobs[index] = updatedJob;
-  
-          this.resetForm();
-          this.isLoading = false;
-          this.showForm = false;
-  
-          Toast.fire({
-            icon: 'success',
-            title: 'Başvuru başarıyla güncellendi'
-          });
+      this.jobService.updateJob(this.currentJobId, jobPayload).subscribe({
+        next: (res: any) => {
+          // Interceptor nedeniyle veriyi res.data içinden alıyoruz
+          if (res && res.data) {
+            const updatedData = res.data;
+            const index = this.jobs.findIndex(j => j.id === this.currentJobId);
+            if (index !== -1) {
+              this.jobs[index] = updatedData;
+            }
+          }
+          this.finalizeSave('Başvuru başarıyla güncellendi');
         },
-        error: () => {
-          this.isLoading = false;
-          Swal.fire('Hata', 'Güncelleme sırasında bir sorun oluştu.', 'error');
-        }
+        error: (err) => this.handleError('Güncelleme hatası', err)
       });
     } else {
-      this.jobService.createJob(this.newJob).subscribe({
-        next: (createdJob) => {
-          this.jobs.unshift(createdJob);
-          this.resetForm();
-          this.isLoading = false;
-          this.showForm = false;
-  
-          Toast.fire({
-            icon: 'success',
-            title: 'Yeni başvuru eklendi'
-          });
+      this.jobService.createJob(jobPayload).subscribe({
+        next: (res: any) => {
+          // Veriyi res.data içinden alıp listenin başına ekliyoruz
+          if (res && res.data) {
+            this.jobs.unshift(res.data);
+          }
+          this.finalizeSave('Yeni başvuru eklendi');
         },
-        error: () => {
-          this.isLoading = false;
-          Swal.fire('Hata', 'Kayıt sırasında bir sorun oluştu.', 'error');
-        }
+        error: (err) => this.handleError('Kayıt hatası', err)
       });
     }
+  }
+  
+  private finalizeSave(message: string) {
+    this.resetForm();
+    this.isLoading = false;
+    this.showForm = false;
+    Toast.fire({ icon: 'success', title: message });
+  }
+  
+  private handleError(title: string, err: any) {
+    this.isLoading = false;
+    console.error('Hata Detayı:', err);
+    
+    // Hata mesajını güvenli bir şekilde string'e çeviriyoruz
+    const errorMessage = err.error?.message || 'Bir sorun oluştu.';
+    
+    Swal.fire({
+      icon: 'error',
+      title: title,
+      text: Array.isArray(errorMessage) ? errorMessage.join(', ') : errorMessage
+    });
   }
 
   deleteJob(id: number): void {
@@ -243,7 +265,6 @@ export class JobListComponent implements OnInit {
       case 'red': return 'badge-danger';
       case 'teklif': return 'badge-success';
       case 'başvuruldu': return 'badge-primary';
-      case 'beklemede': return 'badge-info';
       default: return 'badge-secondary';
     }
   }

@@ -54,19 +54,24 @@ export class ProfileComponent implements OnInit {
     const updatePayload: any = { fullName: this.editData.fullName };
     
     // Eğer şifre girilmişse onu da ekle
-    if (this.editData.password && this.editData.password.length > 0) {
+    if (this.editData.password && this.editData.password.trim().length >= 6) {
       updatePayload.password = this.editData.password;
+    } else if (this.editData.password && this.editData.password.length > 0) {
+      alert('Şifre en az 6 karakter olmalıdır!');
+      return;
     }
 
     this.authService.updateUser(this.user.id, updatePayload).subscribe({
-      next: () => {
+      next: (res: any) => {
+        if (res?.success) {
         alert('Profil başarıyla güncellendi! Lütfen tekrar giriş yapın.');
         this.authService.logout(); // Güvenlik için çıkış yaptırıp yeni token aldıralım
         this.router.navigate(['/login']);
+        }
       },
       error: (err) => {
-        console.error(err);
-        alert('Güncelleme hatası!');
+        console.error('Update error:',err);
+        alert('Güncelleme hatası: ' + (err.error?.message || 'Sunucu hatası'));
       }
     });
   }

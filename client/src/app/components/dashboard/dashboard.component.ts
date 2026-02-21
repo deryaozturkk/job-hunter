@@ -69,9 +69,12 @@ export class DashboardComponent implements OnInit {
 
   loadStats() {
     this.jobService.getJobStats().subscribe({
-      next: (data: JobStats[]) => {
-        const labels = data.map(item => item.status);
-        const counts = data.map(item => Number(item.count));
+      next: (res: any) => {
+        if (res && res.data) { // ya da res?.data aynı anlamda
+        const statsData: JobStats[] = res.data;
+
+        const labels = statsData.map(item => item.status);
+        const counts = statsData.map(item => Number(item.count));
 
         this.pieChartLabels = labels;
 
@@ -84,8 +87,9 @@ export class DashboardComponent implements OnInit {
           borderColor: '#ffffff', 
           borderWidth: 2
         }];
-        this.calculateTotals(data);
-      },
+        this.calculateTotals(statsData);
+      }
+    },
       error: (err) => console.error('Hata:', err)
     });
   }
